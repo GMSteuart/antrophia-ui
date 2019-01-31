@@ -1,0 +1,74 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass variables.
+// -----------------------------------------------------------------------------
+
+/* Variables */
+$black: #000;
+//$orange: #F60;
+$orange: #ff4e00;
+$international-orange: #ff4e00;
+
+$outrageous-orange: #ff6633;
+$hot-cinnamon: #d2691e;
+$deep-safron: #ff9933;
+$yellow: #ffcc33; // sunglow
+$red: #e32; // pomegranate
+$dark-red: #890b00; // red berry
+$blue: #2c6877; // paradiso
+$green: #993;
+
+$bean: #401404;
+$brown: $bean;
+$kilamanjaro: #240b02;
+$dark-brown: $kilamanjaro;
+
+$white: #fff;
+$grey: #666;
+
+$input-color: $deep-safron;
+$input-default: $hot-cinnamon;
+$input-active: $international-orange;
+$checkmark-color: $white;
+
+$border-radius: 5px;
+$text-color: $deep-safron;
+
+/// Regular font family
+/// @type List
+// $text-font-stack: 'Open Sans', 'Helvetica Neue Light', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !default;
+
+/// Code (monospace) font family
+/// @type List
+// $code-font-stack: 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Monaco', monospace !default;
+
+/// Copy text color
+/// @type Color
+//$text-color: rgb(34, 34, 34) !default;
+
+/// Main brand color
+/// @type Color
+//$brand-color: rgb(229, 0, 80) !default;
+
+/// Light grey
+/// @type Color
+//$light-grey: rgb(237, 237, 237) !default;
+
+/// Medium grey
+/// @type Color
+//$mid-grey: rgb(153, 153, 153) !default;
+
+/// Dark grey
+/// @type Color
+//$dark-grey: rgb(68, 68, 68) !default;
+
+/// Container's maximum width
+/// @type Length
+//$max-width: 1180px !default;
+
+/// Relative or absolute URL where all assets are served from
+/// @type String
+/// @example scss - When using a CDN
+///   $base-url: 'http://cdn.example.com/assets/';
+$base-url: '/assets/' !default;
+
+$nav-height: 50px;

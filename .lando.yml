@@ -1,0 +1,36 @@
+name: antrophia-ui
+
+proxy:
+  appserver:
+    - antrophia.lndo.site
+  node:
+    - node.antrophia.lndo.site
+
+services:
+  appserver:
+    type: nginx:1.12
+    ssl: true
+    webroot: dist
+    overrides:
+      services:
+        ports: ['8888:80']
+  node:
+    type: node:9
+    globals:
+    overrides:
+      services:
+        ports:
+          - '8080:8080'
+
+tooling:
+  npm:
+    service: node
+  node:
+    service: node
+  vue:
+    service: node
+
+events:
+  post-start:
+    - node: 'cd $LANDO_MOUNT && npm install'
+    - node: 'cd $LANDO_MOUNT && npm install @vue/cli -g'

@@ -62,14 +62,6 @@ export default {
       this.join({
         game_id: this.$route.params.game_id,
         race_id: this.race_id
-      }).then(response => {
-        console.log(response);
-        // if (response.status) {
-        //   console.log(response)
-        // }
-        // else {
-        //   this.warning(response.error.message)
-        // }
       });
     }
   }

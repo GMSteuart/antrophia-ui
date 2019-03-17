@@ -14,7 +14,7 @@
       </template>
 
       <template slot="body">
-        <template v-for="(buildings, buildingType, bTidx) in buildingsByType">
+        <template v-for="(buildings, buildingType) in buildingsByType">
           <tr v-for="(building, idx) in buildings" :key="building.Building.id">
             <td v-if="idx === 0">{{ buildingType }}</td>
             <td v-else></td>

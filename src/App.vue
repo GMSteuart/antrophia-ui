@@ -77,7 +77,7 @@ export default {
       alertClear: "alert/clear"
     }),
     /* Animations */
-    onAppear(el) {
+    onAppear() {
       anime({
         targets: ".antro-intro .lines path",
         strokeDashoffset: [anime.setDashoffset, 0],
@@ -90,7 +90,7 @@ export default {
         loop: false
       });
     },
-    appearCancelled(el) {
+    appearCancelled() {
       anime({
         targets: ".antro-intro",
         opacity: 0,
@@ -129,12 +129,12 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Orbitron:400,500,700,900');
+@import url("https://fonts.googleapis.com/css?family=Orbitron:400,500,700,900");
 
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
 }
 
 html,

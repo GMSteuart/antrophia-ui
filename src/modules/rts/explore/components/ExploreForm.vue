@@ -18,7 +18,7 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import { validationMixin } from "vuelidate";
-import { minValue, required } from "vuelidate/lib/validators";
+import { required } from "vuelidate/lib/validators";
 import AntroFieldset from "@/components/base/AntroFieldset";
 import AntroInput from "@/components/base/AntroInput";
 import AntroButton from "@/components/base/AntroButton";

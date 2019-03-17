@@ -20,7 +20,6 @@ export const authentication = {
           }
         )
         .catch((error) => {
-          console.log(error)
           commit('loginFailure', error)
           dispatch('alert/error', error, { root: true })
         })

@@ -87,7 +87,7 @@ export default {
     };
   },
   methods: {
-    kick(user_game_id) {}
+    // kick(user_game_id) {}
   }
 };
 </script>

@@ -15,11 +15,7 @@
 
 <script>
 // TODO: implement a symbol to be added after (e.g. material design)
-import anime from "animejs";
-
-import numberFormat from "@/filters/numberFormat";
-
-// todo: set svg width/height to 100% and then some?
+// TODO: set svg width/height to 100% and then some?
 export default {
   name: "AntroInput",
   inheritAttrs: false,
@@ -89,7 +85,7 @@ export default {
       this.$el.querySelector(".antro-input__input").focus();
       this.isFocused = true;
     },
-    focus(event) {},
+    focus() {},
     focusout() {},
     created() {}
   }

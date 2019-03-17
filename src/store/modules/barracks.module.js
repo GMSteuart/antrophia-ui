@@ -56,7 +56,7 @@ export const barracks = {
       });
     },
     reorder({ dispatch }, stack) {
-      return barracks_client.reorder(stack).then(response => {
+      return barracks_client.reorder(stack).then(() => {
         dispatch('player/fetch', null, { root: true });
       });
     },

@@ -1,6 +1,11 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
+  devServer: {
+    disableHostCheck: true,
+    // matches lando config
+    public: 'antrophia.lndo.site',
+  },
   chainWebpack: config => {
     if (config.plugins.has('extract-css')) {
       const extractCSSPlugin = config.plugin('extract-css');
@@ -18,7 +23,7 @@ module.exports = {
       .test(/\.(woff2?|eot|ttf|otf)(\?.*)?$/)
       .use('url-loader')
       .loader('url-loader')
-      .end();
+      .end()
   },
 
   configureWebpack: {
@@ -49,4 +54,4 @@ module.exports = {
       enableInSFC: true,
     },
   },
-};
+}

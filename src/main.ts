@@ -13,6 +13,7 @@ Vue.component('main-layout', MainLayout)
 Vue.component('game-layout', GameLayout)
 
 import '@/modules/rts'
+import './registerServiceWorker'
 
 if (process.env.mode === 'production') {
   Vue.config.productionTip = false;

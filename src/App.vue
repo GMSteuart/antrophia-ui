@@ -28,15 +28,18 @@
   </div>
 </template>
 
-<script>
-import { mapActions, mapState } from "vuex";
-import anime from "animejs";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faTimes } from "@fortawesome/pro-light-svg-icons";
+<script lang="ts">
+// TODO: convert to ts
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { mapActions, mapState } from "vuex"
+import anime from "animejs"
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+import { faTimes } from "@fortawesome/pro-light-svg-icons"
 
-import auth from "./auth";
+import auth from "./auth"
 
-import AntrophiaIntro from "./components/base/AntrophiaIntro";
+import AntrophiaIntro from "@/components/base/AntrophiaIntro"
 
 export default {
   name: "app",
@@ -83,8 +86,8 @@ export default {
         strokeDashoffset: [anime.setDashoffset, 0],
         easing: "easeInOutSine",
         duration: 5000,
-        delay: function(el, i) {
-          return i * 350;
+        delay(el, i) {
+          return i * 350
         },
         direction: "alternate",
         loop: false
@@ -102,7 +105,7 @@ export default {
         anime({
           targets: el,
           opacity: 0
-        });
+        })
       }
     },
     enter(el, done) {
@@ -127,14 +130,13 @@ export default {
   }
 };
 </script>
-
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Orbitron:400,500,700,900');
+@import url("https://fonts.googleapis.com/css?family=Orbitron:400,500,700,900");
 
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
 }
 
 html,

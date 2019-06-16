@@ -1,26 +1,26 @@
 name: antrophia-ui
 
 proxy:
-  appserver:
-    - antrophia.lndo.site
   node:
-    - node.antrophia.lndo.site
+    # expose and route traffic to port 8080 for vue webpack-dev-server
+    - antrophia.lndo.site:8080
 
 services:
   appserver:
-    type: nginx:1.12
+    type: nginx:1.14
     ssl: true
     webroot: dist
     overrides:
-      services:
-        ports: ['8888:80']
+      ports: ['8888:80']
   node:
-    type: node:9
+    type: node:11
     globals:
-    overrides:
-      services:
-        ports:
-          - '8080:8080'
+      "@vue/cli": latest
+      "@vue/cli-service-global": latest
+      yarn: latest
+    build:
+      - yarn install
+    command: yarn serve
 
 tooling:
   npm:
@@ -29,8 +29,5 @@ tooling:
     service: node
   vue:
     service: node
-
-events:
-  post-start:
-    - node: 'cd $LANDO_MOUNT && npm install'
-    - node: 'cd $LANDO_MOUNT && npm install @vue/cli -g'
+  yarn:
+    service: node

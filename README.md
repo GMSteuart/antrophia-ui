@@ -2,26 +2,26 @@
 
 ## Project setup
 
-```
-npm install
+```bash
+yarn install
 ```
 
 ### Compiles and hot-reloads for development
 
-```
-npm run serve
+```bash
+yarn serve
 ```
 
 ### Compiles and minifies for production
 
-```
-npm run build
+```bash
+yarn build
 ```
 
 ### Lints and fixes files
 
-```
-npm run lint
+```bash
+yarn lint
 ```
 
 ### Package Documentation

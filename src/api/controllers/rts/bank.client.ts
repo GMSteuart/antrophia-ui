@@ -1,29 +1,29 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
   fetch() {
-    return http().get(`/bank.json`);
+    return http().get(`/bank.json`)
   },
-  deposit(money) {
+  deposit(money: number) {
     return http().post(`/bank/despost.json`, {
       Bank: {
-        money,
-      },
-    });
+        money
+      }
+    })
   },
-  withdraw(money) {
+  withdraw(money: number) {
     return http().post(`/bank/withdraw.json`, {
       Bank: {
-        money,
-      },
-    });
+        money
+      }
+    })
   },
-  transfer(amount, recipient_id) {
+  transfer(amount: number, recipient_id: number) {
     return http().post(`/bank/transfer`, {
       Bank: {
         amount,
-        recipient_id,
-      },
-    });
-  },
-};
+        recipient_id
+      }
+    })
+  }
+}

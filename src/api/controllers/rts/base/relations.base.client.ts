@@ -1,10 +1,10 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
   fetch() {
-    return http().get(`/base/relations.json`);
+    return http().get(`/base/relations.json`)
   },
-  edit(Relations) {
-    return http().post(`/base/relations.json`, { Relations });
-  },
-};
+  edit(form: any) {
+    return http().post(`/base/relations.json`, { Relations: form })
+  }
+}

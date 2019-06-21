@@ -1,37 +1,37 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
   fetch() {
-    return http().get(`/base.json`);
+    return http().get(`/base.json`)
   },
-  broadcast(Message) {
-    return http().post(`/base/broadcast.json`, { Message });
+  broadcast(form: any) {
+    return http().post(`/base/broadcast.json`, { Message: form })
   },
-  build(Build) {
-    return http().post(`/base/build.json`, { Build });
+  build(form: any) {
+    return http().post(`/base/build.json`, { Build: form })
   },
-  buildCalc(Build) {
-    return http().post(`/base/buildCalc.json`, { Build });
+  buildCalc(form: any) {
+    return http().post(`/base/buildCalc.json`, { Build: form })
   },
-  coleader(Assign) {
-    return http().post(`/base/coleader.json`, { Assign });
+  coleader(form: any) {
+    return http().post(`/base/coleader.json`, { Assign: form })
   },
   disband() {
-    return http().delete(`/base/disband.json`);
+    return http().delete(`/base/disband.json`)
   },
-  donate(Donate) {
-    return http().post(`/base/donate.json`, { Donate });
+  donate(form: any) {
+    return http().post(`/base/donate.json`, { Donate: form })
   },
-  kick(Kick) {
-    return http().post(`/base/kick.json`, { Kick });
+  kick(form: any) {
+    return http().post(`/base/kick.json`, { Kick: form })
   },
-  leader(Leader) {
-    return http().post(`/base/leader.json`, { Leader });
+  leader(form: any) {
+    return http().post(`/base/leader.json`, { Leader: form })
   },
   leave() {
-    return http().delete(`/base/leave.json`);
+    return http().delete(`/base/leave.json`)
   },
-  transfer(Transfer) {
-    return http().post(`/base/transfer.json`, { Transfer });
-  },
-};
+  transfer(form: any) {
+    return http().post(`/base/transfer.json`, { Transfer: form })
+  }
+}

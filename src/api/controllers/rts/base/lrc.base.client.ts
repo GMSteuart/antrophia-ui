@@ -1,16 +1,16 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
   fetchTargets() {
-    return http().get(`/base/lrc.json`);
+    return http().get(`/base/lrc.json`)
   },
-  name(Lrc) {
-    return http().post(`/base/lrc.json`, { Lrc });
+  name(form: any) {
+    return http().post(`/base/lrc.json`, { Lrc: form })
   },
-  addMinerals(LrcAdd) {
-    return http().post(`/base/lrc.json`, { LrcAdd });
+  addMinerals(form: any) {
+    return http().post(`/base/lrc.json`, { LrcAdd: form })
   },
-  selectTarget(LrcTarget) {
-    return http().post(`/base/lrc.json`, { LrcTarget });
-  },
-};
+  selectTarget(form: any) {
+    return http().post(`/base/lrc.json`, { LrcTarget: form })
+  }
+}

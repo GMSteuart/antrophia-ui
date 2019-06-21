@@ -1,17 +1,17 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
   fetch() {
     // todo: implement pagination
-    return http().get(`/market.json`);
+    return http().get(`/market.json`)
   },
-  add(Market) {
-    return http().post(`/market/add.json`, { Market });
+  add(form: any) {
+    return http().post(`/market/add.json`, { Market: form })
   },
-  buy(market_id) {
-    return http().get(`/market/buy/${market_id}.json`);
+  buy(marketId: number) {
+    return http().get(`/market/buy/${marketId}.json`)
   },
-  remove(market_id) {
-    return http().delete(`/market/remove/${market_id}.json`);
-  },
-};
+  remove(marketId: number) {
+    return http().delete(`/market/remove/${marketId}.json`)
+  }
+}

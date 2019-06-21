@@ -1,10 +1,10 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
   targets() {
-    return http().fetch(`/missiles.json`);
+    return http().get(`/missiles.json`)
   },
-  launch(Missiles) {
-    return http().post(`/missiles/launch.json`, { Missiles });
-  },
-};
+  launch(form: any) {
+    return http().post(`/missiles/launch.json`, { Missiles: form })
+  }
+}

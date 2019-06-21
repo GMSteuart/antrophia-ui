@@ -1,5 +1,5 @@
-const fetch = (mockData, time = 0) => {
-  return new Promise((resolve) => {
+const fetch = (mockData: JSON, time: number = 0) => {
+  return new Promise(resolve => {
     setTimeout(() => {
       resolve(mockData)
     }, time)
@@ -9,5 +9,5 @@ const fetch = (mockData, time = 0) => {
 // TODO: refactor mock client
 
 export default {
-  endpoint: `https://api.antrophia.lndo.site`,
+  endpoint: `https://api.antrophia.lndo.site`
 }

@@ -1,27 +1,29 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
   fetch() {
-    return http().get('/alliances.json');
+    return http().get('/alliances.json')
   },
-  add(name, password, password_confirm, info) {
+  // TODO: update so the form object is passed
+  add(name: string, password: string, passwordConfirm: string, info: string) {
     return http().post(`/alliances/add.json`, {
       Alliance: {
         name,
         password,
-        password_confirm,
-        info,
-      },
-    });
+        password_confirm: passwordConfirm,
+        info
+      }
+    })
   },
-  join(alliance_id, password) {
-    return http().post(`/alliances/join/${alliance_id}.json`, {
+  // TODO: update so the form object is passed
+  join(allianceId: number, password: string) {
+    return http().post(`/alliances/join/${allianceId}.json`, {
       Alliance: {
-        password,
-      },
-    });
+        password
+      }
+    })
   },
-  view(alliance_id) {
-    return http().get(`/alliances/view/${alliance_id}.json`);
-  },
-};
+  view(allianceId: number) {
+    return http().get(`/alliances/view/${allianceId}.json`)
+  }
+}

@@ -3,7 +3,9 @@
     <h1>Lobby</h1>
 
     <antro-table v-if="isPlaying">
-      <template slot="caption">Currently Playing</template>
+      <template slot="caption"
+        >Currently Playing</template
+      >
 
       <template slot="header">
         <tr>
@@ -20,7 +22,9 @@
           <td class="string">{{ game.Game.title }}</td>
           <td class="string">{{ game.Game.start | TimeAgoInWords }}</td>
           <td class="string">{{ game.Game.end | TimeAgoInWords }}</td>
-          <td class="string">{{ gameLength(game.Game.start, game.Game.end) }} days</td>
+          <td class="string">
+            {{ gameLength(game.Game.start, game.Game.end) }} days
+          </td>
           <td class="action">
             <div @click="play(game.Game.id)">Play</div>
           </td>
@@ -29,7 +33,9 @@
     </antro-table>
 
     <antro-table>
-      <template slot="caption">Live Games</template>
+      <template slot="caption"
+        >Live Games</template
+      >
 
       <template slot="header">
         <tr>
@@ -46,9 +52,16 @@
           <td class="string">{{ game.Game.title }}</td>
           <td class="string">{{ game.Game.start | TimeAgoInWords }}</td>
           <td class="string">{{ game.Game.end | TimeAgoInWords }}</td>
-          <td class="string">{{ gameLength(game.Game.start, game.Game.end) }} days</td>
+          <td class="string">
+            {{ gameLength(game.Game.start, game.Game.end) }} days
+          </td>
           <td class="action">
-            <div v-if="inGameList.includes(game.Game.id)" @click="join(game.Game.id)">Play</div>
+            <div
+              v-if="inGameList.includes(game.Game.id)"
+              @click="join(game.Game.id)"
+            >
+              Play
+            </div>
             <div v-else>Join</div>
           </td>
         </tr>
@@ -58,6 +71,7 @@
 </template>
 
 <script>
+// TODO: convert to ts
 import { mapActions, mapState } from "vuex";
 import TimeAgoInWords from "@/filters/timeAgoInWords";
 import TimeLength from "@/filters/timeLength";
@@ -84,7 +98,7 @@ export default {
       return typeof this.playing !== "undefined";
     },
     inGameList() {
-      let _items = [];
+      const _items = [];
 
       this.current.forEach(game => {
         _items.push(game.Game.id);
@@ -101,16 +115,16 @@ export default {
     gameLength(start, end) {
       return TimeLength(start, end);
     },
-    join(game_id) {
+    join(gameId) {
       this.$router.push({
         name: "usersgames-add",
         params: {
-          game_id
+          gameId
         }
       });
     },
-    play(game_id) {
-      this.playGame({ game_id });
+    play(gameId) {
+      this.playGame({ gameId });
     }
   }
 };

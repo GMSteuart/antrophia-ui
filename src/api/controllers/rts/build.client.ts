@@ -1,19 +1,19 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
-  start(Build) {
-    return http().post(`/build/start.json`, { Build });
+  start(form: any) {
+    return http().post(`/build/start.json`, { Build: form })
   },
-  calc(Build) {
-    return http().post(`/build/calc.json`, { Build });
+  calc(form: any) {
+    return http().post(`/build/calc.json`, { Build: form })
   },
   cancel() {
-    return http().delete(`/build/cancel.json`);
+    return http().delete(`/build/cancel.json`)
   },
-  destroy(form) {
-    return http().post(`/build/destroy.json`, { form });
+  destroy(form: any) {
+    return http().post(`/build/destroy.json`, { form })
   },
   finish() {
-    return http().post(`/build/finish.json`);
-  },
-};
+    return http().post(`/build/finish.json`)
+  }
+}

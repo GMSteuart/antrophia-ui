@@ -1,10 +1,10 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
-  deposit(Deposit) {
-    return http().post(`/base/bank.json`, Deposit);
+  deposit(form: any) {
+    return http().post(`/base/bank.json`, { Deposit: form })
   },
-  withdraw(Withdraw) {
-    return http().post(`/base/bankWithdraw.json`, Withdraw);
-  },
-};
+  withdraw(form: any) {
+    return http().post(`/base/bankWithdraw.json`, { Withdraw: form })
+  }
+}

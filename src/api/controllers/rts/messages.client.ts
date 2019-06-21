@@ -1,16 +1,16 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
   fetch() {
-    return http().get(`/messages.json`);
+    return http().get(`/messages.json`)
   },
-  send(user_id, Message) {
-    return http().post(`/messages/send/${user_id}.json`, { Message });
+  send(userId: number, form: any) {
+    return http().post(`/messages/send/${userId}.json`, { Message: form })
   },
-  view(message_id) {
-    return http().get(`/messages/view/${message_id}`);
+  view(messageId: number) {
+    return http().get(`/messages/view/${messageId}`)
   },
-  reply(Message) {
-    return http().post(`/messages/reply.json`, { Message });
-  },
-};
+  reply(form: any) {
+    return http().post(`/messages/reply.json`, { Message: form })
+  }
+}

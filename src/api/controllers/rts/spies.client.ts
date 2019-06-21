@@ -1,25 +1,25 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
   fetch() {
-    return http().get(`/spies.json`);
+    return http().get(`/spies.json`)
   },
-  view(report_id) {
-    return http().get(`/spies/view/${report_id}.json`);
+  view(reportId: number) {
+    return http().get(`/spies/view/${reportId}.json`)
   },
-  train(Spy) {
-    return http().post(`/spies/train.json`, { Spy });
+  train(form: any) {
+    return http().post(`/spies/train.json`, { Spy: form })
   },
-  calc(Spy) {
-    return http().post(`/spies/calc.json`, { Spy });
+  calc(form: any) {
+    return http().post(`/spies/calc.json`, { Spy: form })
   },
   cancel() {
-    return http().delete(`/spies/cancel.json`);
+    return http().delete(`/spies/cancel.json`)
   },
-  send(SpyReports) {
-    return http().post(`/spies/send.json`, { SpyReports });
+  send(form: any) {
+    return http().post(`/spies/send.json`, { SpyReports: form })
   },
   finish() {
-    return http().post(`/spies/finish.json`);
-  },
-};
+    return http().post(`/spies/finish.json`)
+  }
+}

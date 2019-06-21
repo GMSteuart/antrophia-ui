@@ -1,10 +1,10 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
-  updatePassword(Password) {
-    return http().post(`/base/settings.json`, { Password });
+  updatePassword(form: any) {
+    return http().post(`/base/settings.json`, { Password: form })
   },
-  updateInfo(Info) {
-    return http().post(`/base/settings.json`, { Info });
-  },
-};
+  updateInfo(form: any) {
+    return http().post(`/base/settings.json`, { Info: form })
+  }
+}

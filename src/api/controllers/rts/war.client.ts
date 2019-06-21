@@ -1,13 +1,13 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
   fetch() {
-    return http().get(`/war.json`);
+    return http().get(`/war.json`)
   },
-  attack(Battle) {
-    return http().post(`/war/attack.json`, { Battle });
+  attack(Battle: any) {
+    return http().post(`/war/attack.json`, { Battle })
   },
-  view(battle_id) {
-    return http().get(`/war/view/${battle_id}.json`);
-  },
-};
+  view(battleId: number) {
+    return http().get(`/war/view/${battleId}.json`)
+  }
+}

@@ -1,10 +1,10 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
   fetch() {
-    return http().get(`/mines.json`);
+    return http().get(`/mines.json`)
   },
-  update(UserMine) {
-    return http().post(`/mines/update.json`, { UserMine });
-  },
-};
+  update(form: any) {
+    return http().post(`/mines/update.json`, { UserMine: form })
+  }
+}

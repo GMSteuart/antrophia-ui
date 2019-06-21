@@ -10,7 +10,7 @@ export const antrophiaApi = {
   edit(controller: string, data: any) {
     return http().put(`/${controller}.json`, data)
   },
-  play(game_id) {
-    return http().post(`/games/play/${game_id}.json`)
+  play(gameId: number) {
+    return http().post(`/games/play/${gameId}.json`)
   }
 }

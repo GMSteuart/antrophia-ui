@@ -1,13 +1,13 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
   fetch() {
-    return http().get(`/base/hitlist.json`);
+    return http().get(`/base/hitlist.json`)
   },
-  add(Hitlist) {
-    return http().post(`/base/hitlist.json`, { Hitlist });
+  add(form: any) {
+    return http().post(`/base/hitlist.json`, { Hitlist: form })
   },
-  remove(Hitlist) {
-    return http().delete(`/base/hitlist.json`, { Hitlist });
-  },
-};
+  remove(form: any) {
+    return http().delete(`/base/hitlist.json`, { data: { Hitlist: form } })
+  }
+}

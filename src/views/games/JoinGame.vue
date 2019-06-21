@@ -1,16 +1,19 @@
 <template>
   <div class="join-game centered">
     <antro-fieldset legen="Join Game" name="join-game">
-      <select v-model="race_id">
+      <select v-model="raceId">
         <option disabled value>Please select a race</option>
         <option
           v-for="race in gamesRaces"
           :key="race.Race.id"
           :value="race.Race.id"
-        >{{ race.Race.name }}</option>
+          >{{ race.Race.name }}</option
+        >
       </select>
 
-      <antro-button class="btn--submit antro-btn" @click.native="doJoin">Join Game</antro-button>
+      <antro-button class="btn--submit antro-btn" @click.native="doJoin"
+        >Join Game</antro-button
+      >
     </antro-fieldset>
     <router-link :to="{ name: 'lobby' }">Back to Lobby</router-link>
   </div>
@@ -29,7 +32,7 @@ export default {
   },
   data() {
     return {
-      race_id: ""
+      raceId: ""
     };
   },
   computed: {
@@ -37,7 +40,7 @@ export default {
       races: state => state.races.all
     }),
     gamesRaces() {
-      let _races = [];
+      const _races = [];
       this.races.forEach(race => {
         if (race.Race.name !== "Zealot" && race.Race.name !== "Undying") {
           _races.push(race);
@@ -61,7 +64,7 @@ export default {
     doJoin() {
       this.join({
         game_id: this.$route.params.game_id,
-        race_id: this.race_id
+        race_id: this.raceId
       }).then(response => {
         console.log(response);
         // if (response.status) {

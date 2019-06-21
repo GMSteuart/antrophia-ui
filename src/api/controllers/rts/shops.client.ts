@@ -1,13 +1,13 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
   fetch() {
-    return http().get(`/shops.json`);
+    return http().get(`/shops.json`)
   },
-  buy(Shops) {
-    return http().post(`/shops/buy.json`, { Shops });
+  buy(form: any) {
+    return http().post(`/shops/buy.json`, { Shops: form })
   },
-  calc(Shops) {
-    return http().post(`/shops/calc.json`, { Shops });
-  },
-};
+  calc(form: any) {
+    return http().post(`/shops/calc.json`, { Shops: form })
+  }
+}

@@ -1,14 +1,14 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
   fetch() {
     return http().get(`/labs.json`)
   },
-  view(lab_id) {
-    return http().get(`/labs/view/${lab_id}.json`)
+  view(labId: number) {
+    return http().get(`/labs/view/${labId}.json`)
   },
-  research(lab_id) {
-    return http().post(`/labs/researc/${lab_id}.json`)
+  research(labId: number) {
+    return http().post(`/labs/researc/${labId}.json`)
   },
   cancel() {
     return http().delete(`/labs/cancel.json`)
@@ -16,4 +16,4 @@ export default {
   finish() {
     return http().post(`/labs/finish.json`)
   }
-};
+}

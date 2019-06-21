@@ -1,6 +1,6 @@
 // TODO: finish interface
 export interface Race {
-  id: Number
+  id: number
 }
 
 export interface RacesState {

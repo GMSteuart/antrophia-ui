@@ -3,7 +3,7 @@ import router from '@/router'
 router.addRoutes([
   {
     path: '/rts/factories',
-    component: () => import(/* webpackChunkName: "rts-factories" */ './pages/Factories'),
+    component: () => import(/* webpackChunkName: "rts-factories" */ './pages/Factories.vue'),
     meta: {
       layout: 'game',
       requiresAuth: true
@@ -12,7 +12,7 @@ router.addRoutes([
       {
         path: '',
         name: 'rts-factories',
-        component: () => import(/* webpackChunkName: "rts-factories-index" */ './pages/FactoriesIndex'),
+        component: () => import(/* webpackChunkName: "rts-factories-index" */ './pages/FactoriesIndex.vue'),
       },
     ]
   },

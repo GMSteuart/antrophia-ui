@@ -1,57 +1,92 @@
-import router from '@/router';
-import explore_client from '@/api/controllers/rts/explore.client';
+import router from '@/router'
+import explore_client from '@/api/controllers/rts/explore.client'
+import { Explore } from './player/types'
+import { Module, ActionTree, MutationTree } from 'vuex'
+import { RootState } from '../types'
 
-export const explore = {
+export interface Explore {
+  id: number
+}
+
+export interface ExploreState {
+  estimatedLandGain: number
+}
+
+export const state: ExploreState = {
+  estimatedLandGain: 0
+}
+
+export const actions: ActionTree<ExploreState, RootState> = {
+  async calc({ commit }, payload) {
+    try {
+      const { data } = await explore_client.calc(payload)
+      const { amount } = data
+      commit('setEstimatedLandGain', amount)
+    } catch (err) {
+      throw new Error(err)
+    }
+  },
+  async start({ dispatch }, payload) {
+    try {
+      const { data } = await explore_client.start(payload)
+      const { message, success } = data
+
+      if (success) {
+        router.push({ name: 'rts-status' })
+        dispatch('alert/success', message, { root: true })
+      } else {
+        dispatch('alert/error', message, { root: true })
+      }
+      dispatch('player/fetch', null, { root: true })
+    } catch (err) {
+      throw new Error(err)
+    }
+  },
+  async cancel({ commit, dispatch }) {
+    try {
+      const { data } = await explore_client.cancel()
+      const { message, success } = data
+
+      if (success) {
+        router.push({ name: 'rts-explore' })
+        dispatch('alert/success', message, { root: true })
+      } else {
+        dispatch('alert/error', message, { root: true })
+      }
+      dispatch('player/fetch', null, { root: true })
+      commit('setEstimatedLandGain', 0)
+    } catch (err) {
+      throw new Error(err)
+    }
+  },
+  async finish({ commit, dispatch }) {
+    try {
+      const { data } = await explore_client.finish()
+      const { message, success } = data
+
+      if (success) {
+        dispatch('alert/success', message, { root: true })
+      } else {
+        dispatch('alert/error', message, { root: true })
+      }
+      router.push({ name: 'rts-explore' })
+      dispatch('player/fetch', null, { root: true })
+      commit('setEstimatedLandGain', 0)
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+}
+
+export const mutations: MutationTree<ExploreState> = {
+  setEstimatedLandGain(_state, amount) {
+    _state.estimatedLandGain = amount
+  }
+}
+
+export const explore: Module<ExploreState, RootState> = {
   namespaced: true,
-  state: {
-    estimatedLandGain: 0,
-  },
-  mutations: {
-    setEstimatedLandGain(state, amount) {
-      state.estimatedLandGain = amount;
-    },
-  },
-  actions: {
-    calc({ commit }, Explore) {
-      return explore_client.calc(Explore).then(({ amount }) => {
-        commit('setEstimatedLandGain', amount);
-      });
-    },
-    start({ dispatch }, Explore) {
-      return explore_client.start(Explore).then(({ message, success }) => {
-        if (success) {
-          router.push({ name: 'rts-status' });
-          dispatch('alert/success', message, { root: true });
-        } else {
-          dispatch('alert/error', message, { root: true });
-        }
-        dispatch('player/fetch', null, { root: true });
-      });
-    },
-    cancel({ commit, dispatch }) {
-      return explore_client.cancel().then(({ message, success }) => {
-        if (success) {
-          router.push({ name: 'rts-explore' });
-          dispatch('alert/success', message, { root: true });
-        } else {
-          dispatch('alert/error', message, { root: true });
-        }
-        dispatch('player/fetch', null, { root: true });
-        commit('setEstimatedLandGain', 0);
-      });
-    },
-    finish({ commit, dispatch }) {
-      return explore_client.finish().then(({ message, success }) => {
-        if (success) {
-          dispatch('alert/success', message, { root: true });
-        } else {
-          dispatch('alert/error', message, { root: true });
-        }
-        router.push({ name: 'rts-explore' });
-        dispatch('player/fetch', null, { root: true });
-        commit('setEstimatedLandGain', 0);
-      });
-    },
-  },
-  getters: {},
-};
+  state,
+  actions,
+  mutations
+}

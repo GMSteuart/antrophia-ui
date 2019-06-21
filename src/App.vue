@@ -12,7 +12,8 @@
           class="antro-intro-wrapper centered"
           :css="false"
           :key="'antro-intro'"
-        >{{ loadingState }}</antrophia-intro>
+          >{{ loadingString }}</antrophia-intro
+        >
       </div>
       <component v-else :is="layout" :key="'layout'">
         <router-view></router-view>
@@ -20,8 +21,16 @@
     </transition-group>
 
     <transition name="fade">
-      <div v-if="alert.message" class="alert" :class="alert.type" :key="'alert'">
-        <font-awesome-icon :icon="faTimes" class="alert__close"></font-awesome-icon>
+      <div
+        v-if="alert.message"
+        class="alert"
+        :class="alert.type"
+        :key="'alert'"
+      >
+        <font-awesome-icon
+          :icon="faTimes"
+          class="alert__close"
+        ></font-awesome-icon>
         <p>{{ alert.message }}</p>
       </div>
     </transition>
@@ -35,108 +44,115 @@ import Component from 'vue-class-component'
 import { mapActions, mapState } from "vuex"
 import anime from "animejs"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faTimes } from "@fortawesome/pro-light-svg-icons"
+import { faTimes, IconDefinition } from "@fortawesome/pro-light-svg-icons"
+import AntrophiaIntro from "@/components/base/AntrophiaIntro.vue"
+import { RootState } from './store/types'
+import { AlertState } from './types/index'
+import { Route } from 'vue-router';
 
-import auth from "./auth"
-
-import AntrophiaIntro from "@/components/base/AntrophiaIntro"
-
-export default {
-  name: "app",
+@Component({
   components: {
     AntrophiaIntro,
     FontAwesomeIcon
   },
-  computed: {
-    ...mapState({
-      alert: state => state.alert
-    }),
-    layout() {
-      // check if we have a layout meta key in the route
-      if (this.$route.matched.some(record => record.meta.layout)) {
-        // if we do then set it to the parent layout
-        // todo: make this find the matched element and set it instead of parent
-        return this.$route.matched[0].meta.layout + "-layout";
-      }
+  computed: mapState({
+    // TODO: how to type this function
+    alert: (state: RootState) => state.alert
+  }),
+  methods: mapActions({
+    alertClear: "alert/clear"
+  })
+})
+export default class App extends Vue {
+  name: string = "App"
+  // Data
+  faTimes: IconDefinition = faTimes
+  // authenticated = auth.authenticated, // TODO: move to computed from AuthState
+  loading: boolean = false
+  loadingString: string = "loading..."
 
-      return "main-layout";
-    }
-  },
-  data() {
-    return {
-      faTimes,
-      authenticated: auth.authenticated,
-      loading: false,
-      loadingState: "loading..."
-    };
-  },
+  // Component Decerator Declarations
+  alert!: AlertState
+  alertclear!: () => void
+
+  // Lifecycle Hooks
   created() {
     // todo: only run animation on the first visit
     this.loading = true;
     setTimeout(() => (this.loading = false), 1500);
-  },
-  methods: {
-    ...mapActions({
-      alertClear: "alert/clear"
-    }),
-    /* Animations */
-    onAppear(el) {
-      anime({
-        targets: ".antro-intro .lines path",
-        strokeDashoffset: [anime.setDashoffset, 0],
-        easing: "easeInOutSine",
-        duration: 5000,
-        delay(el, i) {
-          return i * 350
-        },
-        direction: "alternate",
-        loop: false
-      });
-    },
-    appearCancelled(el) {
-      anime({
-        targets: ".antro-intro",
-        opacity: 0,
-        duration: 100
-      });
-    },
-    beforeEnter(el) {
-      if (el.classList.contains("layout")) {
-        anime({
-          targets: el,
-          opacity: 0
-        })
-      }
-    },
-    enter(el, done) {
+  }
+
+  // Computed properties
+  get layout() {
+    // check if we have a layout meta key in the route
+    if (this.$route.matched.some(record => record.meta.layout)) {
+      // if we do then set it to the parent layout
+      // todo: make this find the matched element and set it instead of parent
+      return this.$route.matched[0].meta.layout + "-layout";
+    }
+
+    return "main-layout";
+  }
+
+  // Methods
+  /* Animations */
+  onAppear(el: HTMLElement) {
+    anime({
+      targets: ".antro-intro .lines path",
+      strokeDashoffset: [anime.setDashoffset, 0],
+      easing: "easeInOutSine",
+      duration: 5000,
+      delay(el: HTMLElement, i: number) {
+        return i * 350
+      },
+      direction: "alternate",
+      loop: false
+    });
+  }
+  appearCancelled(el: HTMLElement) {
+    anime({
+      targets: ".antro-intro",
+      opacity: 0,
+      duration: 100
+    });
+  }
+  beforeEnter(el: HTMLElement) {
+    if (el.classList.contains("layout")) {
       anime({
         targets: el,
-        opacity: 1,
-        duration: 2000,
-        easing: "linear",
-        complete: done
-      });
-    }
-  },
-  watch: {
-    $route() {
-      if (this.alert.message) {
-        // clear alert on location change
-        // todo: flashing then redirecting a user clears the message, need to extend this so
-        // that we can set a flash message and redirect without it clearing
-        // this.alertClear();
-      }
+        opacity: 0
+      })
     }
   }
-};
+  enter(el: HTMLElement, done: () => void) {
+    anime({
+      targets: el,
+      opacity: 1,
+      duration: 2000,
+      easing: "linear",
+      complete: done
+    });
+  }
+  /* Hooks */
+  beforeRouteEnter(to: Route, from: Route, next: () => void) {
+    if (this.alert.message) {
+      // clear alert on location change
+      // todo: flashing then redirecting a user clears the message, need to extend this so
+      // that we can set a flash message and redirect without it clearing
+      // this.alertClear();
+    }
+    next()
+  }
+}
+
 </script>
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css?family=Orbitron:400,500,700,900");
+@import url('https://fonts.googleapis.com/css?family=Orbitron:400,500,700,900');
 
 * {
   margin: 0;
   padding: 0;
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
 }
 
 html,
@@ -159,7 +175,7 @@ button {
 }
 
 .app {
-  background: $black url("/img/space.png") center top repeat fixed;
+  background: $black url('/img/space.png') center top repeat fixed;
   width: 100%; // always set to 100% and not vw to prevent overflow-x
   height: 100%;
 }

@@ -4,6 +4,7 @@ proxy:
   node:
     # expose and route traffic to port 8080 for vue webpack-dev-server
     - antrophia.lndo.site:8080
+    - storybook-antrophia.lndo.site:6006
 
 services:
   appserver:

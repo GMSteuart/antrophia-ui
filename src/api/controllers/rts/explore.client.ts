@@ -1,16 +1,19 @@
-import http from '@/api/client';
+import http from '@/api/client'
 
 export default {
-  start(Explore) {
-    return http().post(`/explore/start.json`, { Explore });
+  start(data: any) {
+    // TODO: map to add
+    return http().post(`/explore/start.json`, { Explore: data })
   },
-  calc(Explore) {
-    return http().post(`/explore/calc.json`, { Explore });
+  calc(data: any) {
+    // TODO: map to possibly View, Lookup, or Custom
+    return http().post(`/explore/calc.json`, { Explore: data })
   },
   cancel() {
-    return http().delete(`/explore/cancel.json`);
+    // TODO: map Detele as well as finish?
+    return http().delete(`/explore/cancel.json`)
   },
   finish() {
-    return http().post(`/explore/finish.json`);
-  },
-};
+    return http().post(`/explore/finish.json`)
+  }
+}

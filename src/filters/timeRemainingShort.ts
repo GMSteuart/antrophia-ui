@@ -1,23 +1,23 @@
 /**
  * Time Remaining
  *
- * Takes seconds and oupts the time remaining in words
+ * Takes seconds and returns the time remaining in words
  *
  * @param {Number} seconds
  */
-export default function(seconds) {
+export default function(seconds: number): string {
   if (seconds === 0) {
-    return 'Finished!';
+    return 'Finished!'
   }
 
-  let hours = Math.floor(seconds / 3600);
-  seconds %= 3600;
-  let minutes = Math.floor(seconds / 60);
-  seconds %= 60;
+  const hours = Math.floor(seconds / 3600)
+  seconds %= 3600
+  const minutes = Math.floor(seconds / 60)
+  seconds %= 60
 
   return hours
     ? hours + ' h, '
     : '' + minutes
-      ? minutes + ' m, '
-      : '' + seconds + ' s';
+    ? minutes + ' m, '
+    : '' + seconds + ' s'
 }

@@ -1,39 +1,44 @@
 import axios from 'axios'
 
-const endpoint = (process.env.NODE_ENV === 'production')
-  ? 'https://api.antrophia.com'
-  : 'https://api.antrophia.lndo.site'
+// TODO: move this to the api and use api instance rather than axios
+const endpoint =
+  process.env.NODE_ENV === 'production'
+    ? 'https://api.antrophia.com'
+    : 'https://api.antrophia.lndo.site'
 
 export default {
   user: {
     authenticated: false
   },
 
-  login(email, password) {
-    return axios.post(`${endpoint}/users/token.json`, {
-      User: {
-        email,
-        password
-      }
-    })
-      .then(({ data }) => {
-        localStorage.setItem('token', data.token)
-
-        this.user.authenticated = true
-
-        return data.user
+  async login(email: string, password: string) {
+    try {
+      const { data } = await axios.post(`${endpoint}/users/token.json`, {
+        User: {
+          email,
+          password
+        }
       })
+      localStorage.setItem('token', data.token)
+      this.user.authenticated = true
+      return data.user
+    } catch (err) {
+      throw new Error(err)
+    }
   },
 
-  register(creds) {
-    return axios.post(`${endpoint}/users/register.json`, creds, (data) => {
-      localStorage.setItem('token', data.token)
-
+  async register(creds: any) {
+    try {
+      const { data } = await axios.post(
+        `${endpoint}/users/register.json`,
+        creds
+      )
+      const { token } = data
+      localStorage.setItem('token', token)
       this.user.authenticated = true
-
-    }).error((err) => {
+    } catch (err) {
       console.log('register err: ' + err)
-    })
+    }
   },
 
   logout() {
@@ -42,12 +47,11 @@ export default {
   },
 
   checkAuth() {
-    var jwt = localStorage.getItem('token')
+    const jwt = localStorage.getItem('token')
 
-    if(jwt) {
+    if (jwt) {
       this.user.authenticated = true
-    }
-    else {
+    } else {
       this.user.authenticated = false
     }
   },
@@ -56,7 +60,7 @@ export default {
     return {
       // todo: for CakePHP 3.x
       // 'Authorization': 'Bearer ' + localStorage.getItem('id_token')
-      'AuthToken': localStorage.getItem('token')
+      AuthToken: localStorage.getItem('token')
     }
   }
 }

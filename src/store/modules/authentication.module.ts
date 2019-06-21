@@ -1,62 +1,78 @@
 import auth from '@/auth'
 import router from '@/router'
+import { AuthState } from '@/types'
+import { Module, ActionTree, MutationTree, GetterTree } from 'vuex'
+import { RootState } from '../types'
 
-export const authentication = {
-  namespaced: true,
-  state: {
-    status: {
-      loggedIn: false,
-    },
-    user: {}
+export const state: AuthState = {
+  status: {
+    authenticated: false
   },
-  actions: {
-    login({ dispatch, commit }, { email, password }) {
+  user: undefined
+}
+
+export const actions: ActionTree<AuthState, RootState> = {
+  async login({ dispatch, commit }, { email, password }) {
+    try {
       commit('loginRequest', { email })
-
-      auth.login(email, password)
-        .then((user) => {
-            commit('loginSuccess', user)
-            router.push('/lobby')
-          }
-        )
-        .catch((error) => {
-          console.log(error)
-          commit('loginFailure', error)
-          dispatch('alert/error', error, { root: true })
-        })
-    },
-    logout({ commit }) {
-      auth.logout()
+      const { data } = await auth.login(email, password)
+      const { user } = data
+      commit('loginSuccess', user)
+      router.push('/lobby')
+    } catch (err) {
+      console.log(err)
+      commit('loginFailure', err)
+      dispatch('alert/error', err, { root: true })
+    }
+  },
+  async logout({ commit }) {
+    try {
+      await auth.logout()
       commit('logout')
-    },
-    setCurrentGame({ commit }, game_id) {
-      commit('setCurrentGame', game_id)
+    } catch (err) {
+      throw new Error(err)
     }
   },
-  mutations: {
-    loginRequest(state, user) {
-      state.status = { loggingIn: true }
-      state.user = user
-    },
-    loginSuccess(state, user) {
-      state.status = { loggedIn: true }
-      state.user = user
-    },
-    loginFailure(state) {
-      state.status = {}
-      state.user = null
-    },
-    logout(state) {
-      state.status = {}
-      state.user = null
-    },
-    setCurrentGame(state, game_id) {
-      state.user.current_game_id = game_id
-    }
+  setCurrentGame({ commit }, game_id) {
+    commit('setCurrentGame', game_id)
+  }
+}
+
+export const mutations: MutationTree<AuthState> = {
+  loginRequest(_state, user) {
+    // TODO: implement NONE, PENDING, ERROR SUCCESS, state
+    // _state.status = { loggingIn: true }
+    _state.user = user
   },
-  getters: {
-    loggedIn: state => {
-      return state.status.loggedIn
+  loginSuccess(_state, user) {
+    _state.status.authenticated = true
+    _state.user = user
+  },
+  loginFailure(_state) {
+    _state.status.authenticated = false
+    _state.user = undefined
+  },
+  logout(_state) {
+    _state.status.authenticated = false
+    _state.user = undefined
+  },
+  setCurrentGame(_state, game_id) {
+    if (_state.user) {
+      _state.user.current_game_id = game_id
     }
   }
+}
+
+export const getters: GetterTree<AuthState, RootState> = {
+  authenticated(_state) {
+    return _state.status.authenticated
+  }
+}
+
+export const authentication: Module<AuthState, RootState> = {
+  namespaced: true,
+  state,
+  actions,
+  mutations,
+  getters
 }

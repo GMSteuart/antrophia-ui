@@ -3,7 +3,7 @@ import router from '@/router'
 router.addRoutes([
   {
     path: '/rts/market',
-    component: () => import(/* webpackChunkName: "rts-market" */ './pages/Market'),
+    component: () => import(/* webpackChunkName: "rts-market" */ './pages/Market.vue'),
     meta: {
       layout: 'game',
       requiresAuth: true
@@ -12,13 +12,13 @@ router.addRoutes([
       {
         path: '',
         name: 'rts-market',
-        component: () => import(/* webpackChunkName: "rts-market-index" */ './pages/MarketIndex'),
+        component: () => import(/* webpackChunkName: "rts-market-index" */ './pages/MarketIndex.vue'),
       },
       {
         path: 'add',
         name: 'rts-market-add',
         props: true,
-        component: () => import(/* webpackChunkName: "rts-market-add" */ './pages/MarketAdd'),
+        component: () => import(/* webpackChunkName: "rts-market-add" */ './pages/MarketAdd.vue'),
       },
     ]
   },

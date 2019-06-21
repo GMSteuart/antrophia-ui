@@ -1,43 +1,57 @@
-export const alert = {
+import { AlertState, AlertType } from '../../types/index'
+import { Module, ActionTree, MutationTree } from 'vuex'
+import { RootState } from '../types'
+
+export const state: AlertState = {
+  type: undefined,
+  message: undefined,
+  delay: 5000
+}
+
+export const actions: ActionTree<AlertState, RootState> = {
+  success({ commit, state: _state }, message) {
+    commit('success', message)
+    setTimeout(() => commit('clear'), _state.delay)
+  },
+  error({ commit, state: _state }, message) {
+    commit('error', message)
+    setTimeout(() => commit('clear'), _state.delay)
+  },
+  warning({ commit, state: _state }, message) {
+    commit('warning', message)
+    setTimeout(() => commit('clear'), _state.delay)
+  },
+  clear({ commit }, message) {
+    commit('clear', message)
+  }
+}
+
+export const mutations: MutationTree<AlertState> = {
+  clear(_state) {
+    _state.type = undefined
+    _state.message = undefined
+  },
+  danger(_state, message) {
+    _state.type = AlertType.Danger
+    _state.message = message
+  },
+  error(_state, message) {
+    _state.type = AlertType.Error
+    _state.message = message
+  },
+  success(_state, message) {
+    _state.type = AlertType.Success
+    _state.message = message
+  },
+  warning(_state, message) {
+    _state.type = AlertType.Warning
+    _state.message = message
+  }
+}
+
+export const alert: Module<AlertState, RootState> = {
   namespaced: true,
-  state: {
-    type: null,
-    message: null,
-    delay: 5000,
-  },
-  mutations: {
-    success(state, message) {
-      state.type = 'alert--success';
-      state.message = message;
-    },
-    error(state, message) {
-      state.type = 'alert--danger';
-      state.message = message;
-    },
-    warning(state, message) {
-      state.type = 'alert--warning';
-      state.message = message;
-    },
-    clear(state) {
-      state.type = null;
-      state.message = null;
-    },
-  },
-  actions: {
-    success({ commit, state }, message) {
-      commit('success', message);
-      setTimeout(() => commit('clear'), state.delay);
-    },
-    error({ commit, state }, message) {
-      commit('error', message);
-      setTimeout(() => commit('clear'), state.delay);
-    },
-    warning({ commit, state }, message) {
-      commit('warning', message);
-      setTimeout(() => commit('clear'), state.delay);
-    },
-    clear({ commit }, message) {
-      commit('clear', message);
-    },
-  },
-};
+  state,
+  actions,
+  mutations
+}

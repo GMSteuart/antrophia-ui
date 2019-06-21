@@ -4,7 +4,7 @@ router.addRoutes([
   {
     path: '/rts/build',
     component: () =>
-      import(/* webpackChunkName: "rts-build" */ './pages/Build'),
+      import(/* webpackChunkName: "rts-build" */ './pages/Build.vue'),
     meta: {
       layout: 'game',
       requiresAuth: true,
@@ -14,13 +14,13 @@ router.addRoutes([
         path: '',
         name: 'rts-build',
         component: () =>
-          import(/* webpackChunkName: "rts-build-index" */ './pages/BuildIndex'),
+          import(/* webpackChunkName: "rts-build-index" */ './pages/BuildIndex.vue'),
       },
       {
         path: 'destroy',
         name: 'rts-destroy',
         component: () =>
-          import(/* webpackChunkName: "rts-build-destroy" */ './pages/BuildDestroy'),
+          import(/* webpackChunkName: "rts-build-destroy" */ './pages/BuildDestroy.vue'),
       },
     ],
   },

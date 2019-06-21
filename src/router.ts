@@ -6,9 +6,9 @@
 
 import Vue from 'vue'
 import Router from 'vue-router'
-import { store } from './store'
+import store from '@/store'
 
-import Home from '@/views/Home'
+import Home from '@/views/Home.vue'
 
 Vue.use(Router)
 
@@ -26,35 +26,42 @@ const router = new Router({
     {
       path: '/lobby',
       name: 'lobby',
-      component: () => import(/* webpackChunkName: "lobby" */ '@/views/Lobby'),
+      component: () =>
+        import(/* webpackChunkName: "lobby" */ '@/views/Lobby.vue'),
       meta: { layout: 'main' }
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import(/* webpackChunkName: "login" */ '@/views/Login')
+      component: () =>
+        import(/* webpackChunkName: "login" */ '@/views/Login.vue')
     },
     {
       path: '/register',
       name: 'register',
-      component: () => import(/* webpackChunkName: "register" */ '@/views/Register')
+      component: () =>
+        import(/* webpackChunkName: "register" */ '@/views/Register.vue')
     },
 
     {
       path: '/games',
       name: 'Games',
-      component: () => import(/* webpackChunkName: "Game" */ '@/views/games/Game'),
+      component: () =>
+        import(/* webpackChunkName: "Game" */ '@/views/games/Game.vue'),
       children: [
         {
           path: 'join/:game_id',
           name: 'usersgames-add',
-          component: () => import(/* webpackChunkName: "JoinGame" */ '@/views/games/JoinGame'),
+          component: () =>
+            import(
+              /* webpackChunkName: "JoinGame" */ '@/views/games/JoinGame.vue'
+            ),
           meta: {
             requiresAuth: true
-          },
+          }
         }
       ]
-    },
+    }
   ]
 })
 

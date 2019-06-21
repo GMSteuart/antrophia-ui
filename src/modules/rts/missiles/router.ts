@@ -3,7 +3,7 @@ import router from '@/router'
 router.addRoutes([
   {
     path: '/rts/missiles',
-    component: () => import(/* webpackChunkName: "rts-missiles" */ './pages/Missiles'),
+    component: () => import(/* webpackChunkName: "rts-missiles" */ './pages/Missiles.vue'),
     meta: {
       layout: 'game',
       requiresAuth: true
@@ -12,7 +12,7 @@ router.addRoutes([
       {
         path: '',
         name: 'rts-missiles',
-        component: () => import(/* webpackChunkName: "rts-missiles-index" */ './pages/MissilesIndex'),
+        component: () => import(/* webpackChunkName: "rts-missiles-index" */ './pages/MissilesIndex.vue'),
       },
     ]
   },

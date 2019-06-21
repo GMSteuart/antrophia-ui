@@ -1,5 +1,5 @@
 import moment from 'moment'
-
-export default function (start, end) {
-  return moment.duration(moment(end).diff(moment(start))).asDays();
+// TODO: optimize by removing moment
+export default function(start: Date, end: Date): number {
+  return moment.duration(moment(end).diff(moment(start))).asDays()
 }

@@ -6,8 +6,8 @@
  * @param date
  */
 
-import moment from 'moment';
-
-export default function(date) {
-  return moment.utc(date).fromNow();
+import moment from 'moment'
+// TODO: optimize by removing moment
+export default function(date: Date): string {
+  return moment.utc(date).fromNow()
 }

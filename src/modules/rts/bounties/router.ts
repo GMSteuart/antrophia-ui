@@ -3,7 +3,7 @@ import router from '@/router'
 router.addRoutes([
   {
     path: '/rts/bounties',
-    component: () => import(/* webpackChunkName: "rts-bounties" */ './pages/Bounties'),
+    component: () => import(/* webpackChunkName: "rts-bounties" */ './pages/Bounties.vue'),
     meta: {
       layout: 'game',
       requiresAuth: true
@@ -12,7 +12,7 @@ router.addRoutes([
       {
         path: '',
         name: 'rts-bounties',
-        component: () => import(/* webpackChunkName: "rts-bounties-index" */ './pages/BountiesIndex'),
+        component: () => import(/* webpackChunkName: "rts-bounties-index" */ './pages/BountiesIndex.vue'),
       },
     ]
   },

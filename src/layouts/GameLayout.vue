@@ -27,10 +27,10 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import GamePageTitle from "@/components/GamePageTitle";
-import MainPlayerCard from "@/components/MainPlayerCard";
-import GameNav from "@/components/GameNav";
-import GamePlayerInfo from "@/components/GamePlayerInfo";
+import GamePageTitle from "@/components/GamePageTitle.vue";
+import MainPlayerCard from "@/components/MainPlayerCard.vue";
+import GameNav from "@/components/GameNav.vue";
+import GamePlayerInfo from "@/components/GamePlayerInfo.vue";
 
 export default {
   name: "GameLayout",
@@ -90,8 +90,8 @@ export default {
   .game {
     display: grid;
     grid-template-areas:
-      "game-title page-title main-player-card"
-      "game-nav game-view game-player-info";
+      'game-title page-title main-player-card'
+      'game-nav game-view game-player-info';
     grid-template-columns: 1fr 3fr 1fr;
     grid-template-rows: auto;
     // height: 100%;

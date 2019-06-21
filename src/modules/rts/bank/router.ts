@@ -3,7 +3,7 @@ import router from '@/router'
 router.addRoutes([
   {
     path: '/rts/bank',
-    component: () => import(/* webpackChunkName: "rts-bank" */ './pages/Bank'),
+    component: () => import(/* webpackChunkName: "rts-bank" */ './pages/Bank.vue'),
     meta: {
       layout: 'game',
       requiresAuth: true
@@ -12,7 +12,7 @@ router.addRoutes([
       {
         path: '',
         name: 'rts-bank',
-        component: () => import(/* webpackChunkName: "rts-bank-index" */ './pages/BankIndex'),
+        component: () => import(/* webpackChunkName: "rts-bank-index" */ './pages/BankIndex.vue'),
       }
     ]
   }

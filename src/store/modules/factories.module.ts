@@ -1,22 +1,40 @@
-import factories_client from '@/api/controllers/rts/factories.client';
-import router from '@/router';
+import router from '@/router'
+import { Module, ActionTree } from 'vuex'
+import { RootState, CrudState } from '../types'
+import { antrophiaApi } from '@/api/antrophia-api'
 
-export const factories = {
+export interface Factory {
+  id: number
+}
+
+export interface FactoriesState extends CrudState<Factory> {}
+
+export const state: FactoriesState = {
+  all: []
+}
+
+export const actions: ActionTree<FactoriesState, RootState> = {
+  async update({ dispatch }, payload) {
+    try {
+      const { data } = await antrophiaApi.edit('factories', {
+        Factory: payload
+      })
+      const { message, success } = data
+      if (success) {
+        router.push({ name: 'rts-factories' })
+        dispatch('alert/success', message, { root: true })
+      } else {
+        dispatch('alert/error', message, { root: true })
+      }
+      dispatch('player/fetch', null, { root: true })
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+}
+
+export const factories: Module<FactoriesState, RootState> = {
   namespaced: true,
-  state: {},
-  mutations: {},
-  actions: {
-    update({ dispatch }, Factory) {
-      return factories_client.update(Factory).then(({ message, success }) => {
-        if (success) {
-          router.push({ name: 'rts-factories' });
-          dispatch('alert/success', message, { root: true });
-        } else {
-          dispatch('alert/error', message, { root: true });
-        }
-        dispatch('player/fetch', null, { root: true });
-      });
-    },
-  },
-  getters: {},
-};
+  state,
+  actions
+}

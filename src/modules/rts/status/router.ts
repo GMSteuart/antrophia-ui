@@ -3,7 +3,7 @@ import router from '@/router'
 router.addRoutes([
   {
     path: '/rts/status',
-    component: () => import(/* webpackChunkName: "rts-status" */ './pages/Status'),
+    component: () => import(/* webpackChunkName: "rts-status" */ './pages/Status.vue'),
     meta: {
       layout: 'game',
       requiresAuth: true
@@ -12,7 +12,7 @@ router.addRoutes([
       {
         path: '',
         name: 'rts-status',
-        component: () => import(/* webpackChunkName: "rts-status-index" */ './pages/StatusIndex'),
+        component: () => import(/* webpackChunkName: "rts-status-index" */ './pages/StatusIndex.vue'),
       },
     ]
   }

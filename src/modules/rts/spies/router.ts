@@ -3,7 +3,7 @@ import router from '@/router'
 router.addRoutes([
   {
     path: '/rts/spies',
-    component: () => import(/* webpackChunkName: "rts-spies" */ './pages/Spies'),
+    component: () => import(/* webpackChunkName: "rts-spies" */ './pages/Spies.vue'),
     meta: {
       layout: 'game',
       requiresAuth: true
@@ -12,13 +12,13 @@ router.addRoutes([
       {
         path: '',
         name: 'rts-spies',
-        component: () => import(/* webpackChunkName: "rts-spies-index" */ './pages/SpiesIndex'),
+        component: () => import(/* webpackChunkName: "rts-spies-index" */ './pages/SpiesIndex.vue'),
       },
       {
         path: 'view/:report_id',
         name: 'rts-spies-view',
         props: true,
-        component: () => import(/* webpackChunkName: "rts-spies-view" */ './pages/SpiesView'),
+        component: () => import(/* webpackChunkName: "rts-spies-view" */ './pages/SpiesView.vue'),
       }
     ]
   },

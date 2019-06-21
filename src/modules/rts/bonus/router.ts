@@ -4,7 +4,7 @@ router.addRoutes([
   {
     path: '/rts/bonus',
     component: () =>
-      import(/* webpackChunkName: "rts-bonus" */ './pages/Bonus'),
+      import(/* webpackChunkName: "rts-bonus" */ './pages/Bonus.vue'),
     meta: {
       layout: 'game',
       requiresAuth: true,
@@ -14,7 +14,7 @@ router.addRoutes([
         path: '',
         name: 'rts-bonus',
         component: () =>
-          import(/* webpackChunkName: "rts-bonus-index" */ './pages/BonusIndex'),
+          import(/* webpackChunkName: "rts-bonus-index" */ './pages/BonusIndex.vue'),
       },
     ],
   },

@@ -3,7 +3,7 @@ import router from '@/router'
 router.addRoutes([
   {
     path: '/rts/explore',
-    component: () => import(/* webpackChunkName: "rts-explore" */ './pages/Explore'),
+    component: () => import(/* webpackChunkName: "rts-explore" */ './pages/Explore.vue'),
     meta: {
       layout: 'game',
       requiresAuth: true
@@ -12,7 +12,7 @@ router.addRoutes([
       {
         path: '',
         name: 'rts-explore',
-        component: () => import(/* webpackChunkName: "rts-explore-index" */ './pages/ExploreIndex'),
+        component: () => import(/* webpackChunkName: "rts-explore-index" */ './pages/ExploreIndex.vue'),
       }
     ]
   }

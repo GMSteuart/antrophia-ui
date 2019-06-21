@@ -3,7 +3,7 @@ import router from '@/router'
 router.addRoutes([
   {
     path: '/rts/mines',
-    component: () => import(/* webpackChunkName: "rts-mines" */ './pages/Mines'),
+    component: () => import(/* webpackChunkName: "rts-mines" */ './pages/Mines.vue'),
     meta: {
       layout: 'game',
       requiresAuth: true
@@ -12,7 +12,7 @@ router.addRoutes([
       {
         path: '',
         name: 'rts-mines',
-        component: () => import(/* webpackChunkName: "rts-mines-index" */ './pages/MinesIndex'),
+        component: () => import(/* webpackChunkName: "rts-mines-index" */ './pages/MinesIndex.vue'),
       },
     ]
   },

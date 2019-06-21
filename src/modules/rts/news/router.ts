@@ -3,7 +3,7 @@ import router from '@/router'
 router.addRoutes([
   {
     path: '/rts/news',
-    component: () => import(/* webpackChunkName: "rts-news" */ './pages/News'),
+    component: () => import(/* webpackChunkName: "rts-news" */ './pages/News.vue'),
     meta: {
       layout: 'game',
       requiresAuth: true
@@ -12,7 +12,7 @@ router.addRoutes([
       {
         path: '',
         name: 'rts-news',
-        component: () => import(/* webpackChunkName: "rts-news-index" */ './pages/NewsIndex'),
+        component: () => import(/* webpackChunkName: "rts-news-index" */ './pages/NewsIndex.vue'),
       },
     ]
   },

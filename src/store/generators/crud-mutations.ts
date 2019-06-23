@@ -1,7 +1,5 @@
-import { nameHelper } from '@/store/helpers/name-helper'
-import { MutationTree, Mutation } from 'vuex'
-import { RootState } from '@/store/types'
-import { CrudState } from '../types'
+import { MutationTree } from 'vuex'
+import { CrudState, RootState } from '@/types'
 
 export function crudMutations<T>(entity: string): MutationTree<any> {
   return {

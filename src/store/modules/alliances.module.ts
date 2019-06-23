@@ -1,10 +1,8 @@
 import alliances_client from '@/api/controllers/rts/alliances.client'
 import router from '@/router'
 import { Module, ActionTree, MutationTree } from 'vuex'
-import { AlliancesState } from '@/types'
-import { RootState } from '../types'
+import { Alliance, AlliancesState, RootState } from '@/types'
 import { crudActions } from '../generators/crud-actions'
-import { Alliance } from '../../types/index'
 
 export const state: AlliancesState = {
   all: [],
@@ -38,9 +36,9 @@ export const actions: ActionTree<AlliancesState, RootState> = {
       throw new Error(err)
     }
   },
-  async view({ commit }, alliance_id) {
+  async view({ commit }, allianceId) {
     try {
-      const { data } = await alliances_client.view(alliance_id)
+      const { data } = await alliances_client.view(allianceId)
       const { alliance } = data
       commit('setActive', alliance)
     } catch (err) {

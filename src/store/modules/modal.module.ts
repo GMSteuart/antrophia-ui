@@ -1,10 +1,5 @@
 import { Module, MutationTree, ActionTree } from 'vuex'
-import { RootState } from '../types'
-
-export interface ModalState {
-  show: boolean
-  text: string
-}
+import { ModalState, RootState } from '@/types'
 
 export const state: ModalState = {
   show: false,

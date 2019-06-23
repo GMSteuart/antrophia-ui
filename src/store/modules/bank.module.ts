@@ -1,8 +1,7 @@
 import bank_client from '@/api/controllers/rts/bank.client'
 import router from '@/router'
-import { BankState } from '../../types/index'
+import { BankState, RootState } from '../../types/index'
 import { Module, ActionTree, MutationTree } from 'vuex'
-import { RootState } from '../types'
 import { mutations } from './player/mutations'
 
 // TODO: move to submodule of player as well as related player actions

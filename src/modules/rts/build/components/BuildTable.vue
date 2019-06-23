@@ -14,12 +14,16 @@
       </template>
 
       <template slot="body">
-        <template v-for="(buildings, buildingType, bTidx) in buildingsByType">
+        <template v-for="(buildings, buildingType) in buildingsByType">
           <tr v-for="(building, idx) in buildings" :key="building.Building.id">
             <td v-if="idx === 0">{{ buildingType }}</td>
             <td v-else></td>
             <td class="string">{{ building.Building.name }}</td>
-            <td class="number">{{ player.Buildings[building.Building.name].amount | numberFormat }}</td>
+            <td class="number">
+              {{
+              player.Buildings[building.Building.name].amount | numberFormat
+              }}
+            </td>
             <td class="number">{{ building.Building.cost | numberFormat }}</td>
             <td class="number">
               <antro-input
@@ -41,7 +45,7 @@
             <antro-select
               v-model="multiplier"
               label="Cardisium Multiplier"
-              :options="[1,2,3,4,5,6,7,8,9]"
+              :options="[1, 2, 3, 4, 5, 6, 7, 8, 9]"
               @input="updateTotal()"
             ></antro-select>
           </td>
@@ -127,7 +131,7 @@ export default {
       totalTime: state => state.build.time
     }),
     Build() {
-      let _build = {
+      const _build = {
         buildings: {},
         multiplier: this.multiplier + 1
       };
@@ -225,7 +229,7 @@ export default {
 
         // iterate over every building in that type
         Object.keys(this.buildingsByType[buildingType]).forEach(idx => {
-          let buildingId = this.buildingsByType[buildingType][idx].Building.id;
+          const buildingId = this.buildingsByType[buildingType][idx].Building.id;
 
           if (typeof this.form[buildingId] !== "undefined") {
             // update the cost and amount for that building type

@@ -115,12 +115,12 @@ export default {
       totalTime: state => state.barracks.time
     }),
     Barracks() {
-      let _barracks = {
+      const _barracks = {
         units: {},
         speed: this.form.speed ? 1 : 0
       };
 
-      let _units = this.unitsByRaceName(this.race);
+      const _units = this.unitsByRaceName(this.race);
 
       Object.keys(_units).forEach(unitIdx => {
         // Protect from setting null values
@@ -135,7 +135,7 @@ export default {
       return _barracks;
     },
     playerUnitAmounts() {
-      let _amounts = {};
+      const _amounts = {};
 
       this.playerUnits.forEach(unit => {
         _amounts[unit.Unit.id] = unit.amount;
@@ -147,7 +147,7 @@ export default {
       let _sum = 0;
 
       Object.keys(this.Barracks.units).forEach(unitId => {
-        let { amount } = this.Barracks.units[unitId];
+        const { amount } = this.Barracks.units[unitId];
 
         if (amount) {
           _sum += amount;
@@ -157,7 +157,7 @@ export default {
       return _sum;
     }
   },
-  created() {},
+  created() { },
   methods: {
     ...mapActions({
       calc: "barracks/calc",
@@ -174,7 +174,7 @@ export default {
     updateTotal() {
       this.calc(this.Barracks);
     },
-    submit() {}
+    submit() { }
   }
 };
 </script>

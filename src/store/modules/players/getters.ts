@@ -1,6 +1,5 @@
 import { GetterTree } from 'vuex'
-import { Player, PlayersState, PlayerList, UserGame } from './types'
-import { RootState } from '../../types'
+import { Player, PlayersState, PlayerList, RootState } from '@/types'
 import orderBy from 'lodash/orderBy'
 import filter from 'lodash/filter'
 

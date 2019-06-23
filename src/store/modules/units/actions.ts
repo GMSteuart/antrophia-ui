@@ -1,6 +1,5 @@
 import { ActionTree } from 'vuex'
-import { Unit, UnitsState } from './types'
-import { RootState } from '../../types'
+import { RootState, UnitsState } from '@/types'
 import { antrophiaApi } from '@/api/antrophia-api'
 
 export const actions: ActionTree<UnitsState, RootState> = {

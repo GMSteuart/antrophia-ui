@@ -77,12 +77,12 @@ export default {
       race: state => state.player.Race.name
     }),
     Barracks() {
-      let _barracks = {
+      const _barracks = {
         units: {},
         speed: this.form.speed ? 1 : 0
       };
 
-      let _units = this.unitsByRaceName(this.race);
+      const _units = this.unitsByRaceName(this.race);
 
       Object.keys(_units).forEach(unitIdx => {
         // Protect from setting null values
@@ -97,7 +97,7 @@ export default {
       return _barracks;
     },
     playerUnitAmounts() {
-      let _amounts = {};
+      const _amounts = {};
 
       this.playerUnits.forEach(unit => {
         _amounts[unit.Unit.id] = unit.amount;
@@ -106,7 +106,7 @@ export default {
       return _amounts;
     }
   },
-  created() {},
+  created() { },
   methods: {
     ...mapActions({
       calc: "barracks/calc",

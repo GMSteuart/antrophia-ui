@@ -1,6 +1,5 @@
-import { AlertState, AlertType } from '../../types/index'
+import { AlertState, AlertType, RootState } from '@/types/index'
 import { Module, ActionTree, MutationTree } from 'vuex'
-import { RootState } from '../types'
 
 export const state: AlertState = {
   type: undefined,

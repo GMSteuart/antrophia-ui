@@ -1,7 +1,7 @@
 <template>
   <div class="antro-select" :class="[required ? 'required' : '', 'antro-input--' + flow]">
     <label v-if="label" class="antro-select__label" :for="label.toLowerCase()">{{ label }}</label>
-    
+
     <select
       class="antro-select__select"
       :id="label.toLowerCase()"
@@ -54,10 +54,10 @@ export default {
     return {};
   },
   computed: {
-    inputListeners: function() {
+    inputListeners() {
       var vm = this;
       return Object.assign({}, this.$listeners, {
-        input: function(event) {
+        input(event) {
           vm.$emit("input", event.target.value);
         }
       });

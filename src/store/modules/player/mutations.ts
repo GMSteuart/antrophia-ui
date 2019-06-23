@@ -1,5 +1,6 @@
 import { MutationTree } from 'vuex'
-import { PlayerState } from './types'
+import { PlayerState } from '@/types'
+
 export const mutations: MutationTree<PlayerState> = {
   setBonus(state, bonus) {
     state.bonus = bonus

@@ -2,18 +2,8 @@ import games_client from '@/api/controllers/games.client'
 import users_games_client from '@/api/controllers/users_games.client'
 import router from '@/router'
 import { Module, ActionTree, MutationTree } from 'vuex'
-import { RootState } from '../types'
+import { Game, GamesState, RootState } from '@/types'
 import { antrophiaApi } from '@/api/antrophia-api'
-
-export interface Game {
-  id: number
-}
-
-export interface GamesState {
-  current: Game[]
-  upcoming: Game[]
-  playing: Game[]
-}
 
 export const state: GamesState = {
   current: [],
@@ -65,14 +55,14 @@ export const actions: ActionTree<GamesState, RootState> = {
 }
 
 export const mutations: MutationTree<GamesState> = {
-  setCurrent(_state, games) {
-    _state.current = games
+  setCurrent(_state, payload) {
+    _state.current = payload
   },
-  setUpcoming(_state, upcomingGames) {
-    _state.upcoming = upcomingGames
+  setUpcoming(_state, payload) {
+    _state.upcoming = payload
   },
-  setPlaying(_state, playingGames) {
-    _state.playing = playingGames
+  setPlaying(_state, payload) {
+    _state.playing = payload
   }
 }
 

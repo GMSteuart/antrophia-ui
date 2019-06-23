@@ -1,6 +1,5 @@
 import { GetterTree } from 'vuex'
-import { Unit, UnitsState } from './types'
-import { RootState } from '@/store/types'
+import { RootState, Unit, UnitsState } from '@/types'
 import groupBy from 'lodash/groupBy'
 import { Dictionary } from 'lodash'
 

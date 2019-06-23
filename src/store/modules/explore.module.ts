@@ -1,16 +1,7 @@
 import router from '@/router'
 import explore_client from '@/api/controllers/rts/explore.client'
-import { Explore } from './player/types'
 import { Module, ActionTree, MutationTree } from 'vuex'
-import { RootState } from '../types'
-
-export interface Explore {
-  id: number
-}
-
-export interface ExploreState {
-  estimatedLandGain: number
-}
+import { Explore, ExploreState, RootState } from '@/types'
 
 export const state: ExploreState = {
   estimatedLandGain: 0

@@ -1,6 +1,5 @@
 import { Module } from 'vuex'
-import { RootState } from '@/store/types'
-import { UnitsState } from './types'
+import { RootState, UnitsState } from '@/types'
 import { mutations } from './mutations'
 
 export const state: UnitsState = {

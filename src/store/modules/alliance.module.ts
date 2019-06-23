@@ -1,9 +1,8 @@
 import base_client from '@/api/controllers/rts/base.client'
-import { bank } from './base/bank.base.module'
-import { AllianceState } from '../../types/index'
+import { allianceBank } from './alliance/bank.alliance.module'
+import { AllianceState, RootState } from '@/types/index'
 import { Module, ActionTree, MutationTree } from 'vuex'
-import { RootState } from '../types'
-import { alliances } from './alliances.module'
+// import { alliances } from './alliances.module'
 
 export const state: AllianceState = {
   // Alliance: {},
@@ -52,6 +51,6 @@ export const base: Module<AllianceState, RootState> = {
   state,
   mutations,
   modules: {
-    bank
+    allianceBank
   }
 }

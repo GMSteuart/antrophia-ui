@@ -10,7 +10,7 @@ export default {
   name: "Barracks",
   computed: {
     ...mapState({
-      barracksAmount: state => Number(state.player.Buildings["Barracks"].amount)
+      barracksAmount: state => Number(state.player.Buildings.Barracks.amount)
     })
   },
   created() {

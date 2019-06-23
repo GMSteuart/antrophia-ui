@@ -1,6 +1,5 @@
-import { PlayerState } from './types'
+import { PlayerState, RootState } from '@/types'
 import { Module } from 'vuex'
-import { RootState } from '../../types'
 
 export const state: PlayerState = {}
 

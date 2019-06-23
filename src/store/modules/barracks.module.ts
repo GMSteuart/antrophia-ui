@@ -1,8 +1,7 @@
 import barracks_client from '@/api/controllers/rts/barracks.client'
 import router from '@/router'
-import { BarracksState } from '../../types/index'
+import { BarracksState, RootState } from '@/types/index'
 import { Module, ActionTree, MutationTree } from 'vuex'
-import { RootState } from '../types'
 
 export const state: BarracksState = {
   cost: 0,

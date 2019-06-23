@@ -1,11 +1,8 @@
 import bounties_client from '@/api/controllers/rts/bounties.client'
-import { CrudState, RootState } from '../types'
-import { Player } from './players/types'
+import { BountiesState, CrudState, Player, RootState } from '@/types'
 import { Module, ActionTree, MutationTree } from 'vuex'
 import { crudActions } from '../generators/crud-actions'
 import { crudMutations } from '../generators/crud-mutations'
-
-export interface BountiesState extends CrudState<Player> {}
 
 export const state: BountiesState = {
   all: []

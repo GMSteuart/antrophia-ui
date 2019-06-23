@@ -1,6 +1,5 @@
 import { ActionTree } from 'vuex'
-import { PlayerState } from './types'
-import { RootState } from '../../types'
+import { PlayerState, RootState } from '@/types'
 import router from '@/router';
 import { antrophiaApi } from '@/api/antrophia-api';
 

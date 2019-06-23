@@ -1,14 +1,8 @@
 import groupBy from 'lodash/groupBy'
-import { CrudState, RootState } from '../types'
+import { CrudState, MineralsState, RootState } from '@/types'
 import { Module, ActionTree, MutationTree, GetterTree } from 'vuex'
-import { antrophiaApi } from '../../api/antrophia-api'
+import { antrophiaApi } from '@/api/antrophia-api'
 import { crudMutations } from '../generators/crud-mutations'
-
-export interface Mineral {
-  id: number
-}
-
-export interface MineralsState extends CrudState<Mineral> {}
 
 export const state: MineralsState = {
   all: []

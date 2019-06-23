@@ -1,8 +1,7 @@
 import base_bank_client from '@/api/controllers/rts/base/bank.base.client'
 import router from '@/router'
 import { Module, ActionTree } from 'vuex'
-import { AllianceBankState } from '@/types'
-import { RootState } from '../../types'
+import { AllianceBankState, RootState } from '@/types'
 
 export const actions: ActionTree<AllianceBankState, RootState> = {
   async deposit({ dispatch }, form) {
@@ -39,7 +38,7 @@ export const actions: ActionTree<AllianceBankState, RootState> = {
   }
 }
 
-export const bank: Module<AllianceBankState, RootState> = {
+export const allianceBank: Module<AllianceBankState, RootState> = {
   namespaced: true,
   actions
 }

@@ -1,18 +1,7 @@
 import build_client from '@/api/controllers/rts/build.client'
 import router from '@/router'
 import { Module, MutationTree, ActionTree } from 'vuex'
-import { RootState } from '../types'
-
-export interface Building {
-  id: number
-}
-export interface BuildState {
-  buildings: Building[]
-  cost: number
-  free_land: number
-  land_used: number
-  time: number
-}
+import { Building, BuildState, RootState } from '@/types'
 
 export const state: BuildState = {
   buildings: [],
@@ -42,11 +31,11 @@ export const actions: ActionTree<BuildState, RootState> = {
   async calc({ commit }, form) {
     try {
       const { data } = await build_client.calc(form)
-      const { time, cost, land_used, free_land } = data
+      const { time, cost, land_used: landUsed, free_land: freeLand } = data
 
       commit('setCost', cost)
-      commit('setFreeLand', free_land)
-      commit('setLandUsed', land_used)
+      commit('setFreeLand', freeLand)
+      commit('setLandUsed', landUsed)
       commit('setTime', time)
     } catch (err) {
       throw new Error(err)
@@ -93,11 +82,11 @@ export const mutations: MutationTree<BuildState> = {
   setCost(_state, cost) {
     _state.cost = cost
   },
-  setFreeLand(_state, free_land) {
-    _state.free_land = free_land
+  setFreeLand(_state, payload: number) {
+    _state.free_land = payload
   },
-  setLandUsed(_state, land_used) {
-    _state.land_used = land_used
+  setLandUsed(_state, payload: number) {
+    _state.land_used = payload
   },
   setTime(_state, time) {
     _state.time = time

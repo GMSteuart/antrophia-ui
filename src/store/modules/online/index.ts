@@ -1,6 +1,5 @@
 import { Module } from 'vuex'
-import { RootState } from '../../types'
-import { OnlineState } from './types'
+import { OnlineState, RootState } from '@/types'
 import { actions } from './actions'
 
 export const state: OnlineState = {

@@ -1,8 +1,7 @@
 import auth from '@/auth'
 import router from '@/router'
-import { AuthState } from '@/types'
+import { AuthState, RootState } from '@/types'
 import { Module, ActionTree, MutationTree, GetterTree } from 'vuex'
-import { RootState } from '../types'
 
 export const state: AuthState = {
   status: {
@@ -33,8 +32,8 @@ export const actions: ActionTree<AuthState, RootState> = {
       throw new Error(err)
     }
   },
-  setCurrentGame({ commit }, game_id) {
-    commit('setCurrentGame', game_id)
+  setCurrentGame({ commit }, gameId) {
+    commit('setCurrentGame', gameId)
   }
 }
 
@@ -56,9 +55,9 @@ export const mutations: MutationTree<AuthState> = {
     _state.status.authenticated = false
     _state.user = undefined
   },
-  setCurrentGame(_state, game_id) {
+  setCurrentGame(_state, gameId) {
     if (_state.user) {
-      _state.user.current_game_id = game_id
+      _state.user.current_game_id = gameId
     }
   }
 }

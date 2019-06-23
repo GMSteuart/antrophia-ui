@@ -46,8 +46,7 @@ import anime from "animejs"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faTimes, IconDefinition } from "@fortawesome/pro-light-svg-icons"
 import AntrophiaIntro from "@/components/base/AntrophiaIntro.vue"
-import { RootState } from './store/types'
-import { AlertState } from './types/index'
+import { AlertState, RootState } from '@/types'
 import { Route } from 'vue-router';
 
 @Component({

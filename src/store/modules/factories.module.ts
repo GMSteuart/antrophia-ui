@@ -1,13 +1,7 @@
 import router from '@/router'
 import { Module, ActionTree } from 'vuex'
-import { RootState, CrudState } from '../types'
+import { CrudState, Factory, FactoriesState, RootState } from '@/types'
 import { antrophiaApi } from '@/api/antrophia-api'
-
-export interface Factory {
-  id: number
-}
-
-export interface FactoriesState extends CrudState<Factory> {}
 
 export const state: FactoriesState = {
   all: []

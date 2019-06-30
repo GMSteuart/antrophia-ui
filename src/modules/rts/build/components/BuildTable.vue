@@ -73,7 +73,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
 import { mapActions, mapGetters, mapState } from "vuex";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {

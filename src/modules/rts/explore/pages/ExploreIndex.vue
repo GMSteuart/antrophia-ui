@@ -23,17 +23,24 @@
   </div>
 </template>
 
-<script>
-import { mapActions, mapState } from "vuex";
-import moment from "moment";
-import isEmpty from "lodash/isEmpty";
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { mapActions, mapState, createNamespacedHelpers } from 'vuex'
+import moment from 'moment'
+import isEmpty from 'lodash/isEmpty'
 
-import AntroButton from "@/components/base/AntroButton";
-import AntroCountdown from "@/components/base/AntroCountdown";
-import ExploreForm from "../components/ExploreForm";
+import AntroButton from '@/components/base/AntroButton.vue'
+import AntroCountdown from '@/components/base/AntroCountdown.vue'
+import ExploreForm from '../components/ExploreForm.vue'
+import { ExploreState, Explore } from '../../../../types/index'
 
-export default {
-  name: "ExploreIndex",
+const {
+  mapActions: mapExploreActions,
+  mapState: mapExploreState
+} = createNamespacedHelpers('player/explore')
+
+@Component({
   components: {
     AntroButton,
     AntroCountdown,
@@ -41,31 +48,42 @@ export default {
   },
   computed: {
     ...mapState({
-      explore: state => state.player.Explore
-    }),
-    hasExplore() {
-      return !isEmpty(this.explore) && this.explore.end !== null;
-    },
-    isFinished() {
-      return this.hasExplore && moment.utc(this.explore.end) < moment.utc();
-    }
-  },
-  created() {
-    if (this.isFinished) {
-      this.finish();
-    }
+      explore: (state: ExploreState): ExploreState => state
+    })
   },
   methods: {
-    ...mapActions({
-      cancel: "explore/cancel",
-      finish: "explore/finish"
-    }),
-    doCancel() {
-      // TODO: implement modal confirming cancel
-      this.cancel();
+    ...mapExploreActions({
+      cancel: 'cancel',
+      finish: 'finish'
+    })
+  }
+})
+export default class ExploreIndex extends Vue {
+  name: string = 'ExploreIndex'
+
+  explore!: Explore
+  cancel!: () => Promise<any>
+  finish!: () => Promise<any>
+
+  get hasExplore() {
+    return !isEmpty(this.explore) && this.explore.end !== null
+  }
+
+  get isFinished() {
+    return this.hasExplore && moment.utc(this.explore.end) < moment.utc()
+  }
+
+  created() {
+    if (this.isFinished) {
+      this.finish()
     }
   }
-};
+
+  doCancel() {
+    // TODO: implement modal confirming cancel
+    this.cancel()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -2,7 +2,9 @@
   <div></div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
 import { mapState } from "vuex";
 import AntroTable from "@/components/base/AntroTable";
 

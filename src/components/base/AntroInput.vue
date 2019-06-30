@@ -75,10 +75,10 @@ export default {
     };
   },
   computed: {
-    inputListeners: function() {
-      var vm = this;
+    inputListeners() {
+      const vm = this;
       return Object.assign({}, this.$listeners, {
-        input: function(event) {
+        input(event) {
           vm.$emit("input", event.target.value);
         }
       });
@@ -89,9 +89,9 @@ export default {
       this.$el.querySelector(".antro-input__input").focus();
       this.isFocused = true;
     },
-    focus(event) {},
-    focusout() {},
-    created() {}
+    focus(event) { },
+    focusout() { },
+    created() { }
   }
 };
 </script>
@@ -101,7 +101,7 @@ input {
   background: #000;
   clear: both;
   //font-size: 140%;
-  font-family: "frutiger linotype", "lucida grande", "verdana", sans-serif;
+  font-family: 'frutiger linotype', 'lucida grande', 'verdana', sans-serif;
   padding: 0.3em;
   //width:98%;
   color: #f96;

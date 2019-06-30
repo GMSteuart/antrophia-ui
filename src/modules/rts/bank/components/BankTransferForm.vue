@@ -26,7 +26,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
   import { mapActions, mapState } from 'vuex'
   import AntroFieldset from "@/components/base/AntroFieldset";
   import AntroInput from "@/components/base/AntroInput";

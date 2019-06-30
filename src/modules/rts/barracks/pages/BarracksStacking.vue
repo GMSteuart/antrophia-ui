@@ -5,7 +5,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
 import ArmyStacking from "../components/ArmyStacking";
 
 export default {

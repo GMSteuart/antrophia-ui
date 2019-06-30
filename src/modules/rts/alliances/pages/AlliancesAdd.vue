@@ -1,82 +1,72 @@
 <template>
   <div>
     <h1>Create Alliance</h1>
-    <antro-fieldset
-      legend="Create Alliance"
-      name="alliance-add"
-    >
-      <antro-input
-        v-model="name"
-        label="Alliance Name"
-        type="text"
-      ></antro-input>
+    <antro-fieldset legend="Create Alliance" name="alliance-add">
+      <antro-input v-model="alliance.name" label="Alliance Name" type="text"></antro-input>
 
       <antro-input
-        v-model="password"
+        v-model="alliance.password"
         label="Alliance Password"
         type="password"
       ></antro-input>
 
       <antro-input
-        v-model="password_confirm"
+        v-model="alliance.password_confirm"
         label="Confirm Password"
         type="password"
       ></antro-input>
 
       <antro-textarea
-        v-model="info"
+        v-model="alliance.info"
         label="Alliance Description"
         placeholder="Describe your alliance"
       ></antro-textarea>
 
-      <antro-button
-        class="btn"
-        @click.native="doCreate"
-      >
-        Create Alliance
-      </antro-button>
+      <antro-button class="btn" @click.native="doCreate">Create Alliance</antro-button>
     </antro-fieldset>
   </div>
 </template>
 
-<script>
-  import { mapActions } from 'vuex'
-  import AntroFieldset from "@/components/base/AntroFieldset"
-  import AntroInput from "@/components/base/AntroInput";
-  import AntroButton from "@/components/base/AntroButton";
-  import AntroTextarea from "@/components/base/AntroTextarea";
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { mapActions, createNamespacedHelpers } from 'vuex'
+import AntroFieldset from '@/components/base/AntroFieldset.vue'
+import AntroInput from '@/components/base/AntroInput.vue'
+import AntroButton from '@/components/base/AntroButton.vue'
+import AntroTextarea from '@/components/base/AntroTextarea.vue'
+import { AllianceForm } from '@/types'
 
-  export default {
-    name: "AlliancesAdd",
-    components: {
-      AntroTextarea,
-      AntroButton,
-      AntroInput,
-      AntroFieldset
-    },
-    data() {
-      return {
-        name: null,
-        password: null,
-        password_confirm: null,
-        info: null,
-      }
-    },
-    methods: {
-      ...mapActions({
-        create: 'alliances/create'
-      }),
-      doCreate() {
-        const { name, password, password_confirm, info } = this;
-        // todo: implement validation
-        if (name && password && password_confirm) {
-          this.create({name, password, password_confirm, info })
-        }
-      }
+const { mapActions: mapAlliancesActions } = createNamespacedHelpers('alliances')
+
+@Component({
+  components: {
+    AntroTextarea,
+    AntroButton,
+    AntroInput,
+    AntroFieldset
+  },
+  methods: {
+    ...mapActions({
+      create: 'create'
+    })
+  }
+})
+export default class AllianceAdd extends Vue {
+  name: string = 'AlliancesAdd'
+  form?: AllianceForm = undefined
+
+  create!: (form: AllianceForm) => Promise<any>
+
+  doCreate() {
+    const { name, password, passwordConfirm, info } = this.form
+    // todo: implement validation
+    if (name && password && passwordConfirm) {
+      this.create({ name, password, passwordConfirm, info })
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-
 </style>

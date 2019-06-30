@@ -30,15 +30,22 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 // TODO: convert alias to link to players profile
-import { mapActions, mapState } from "vuex";
-import numberFormat from "@/filters/numberFormat";
-import timeAgoInWords from "@/filters/timeAgoInWords";
-import AntroTable from "@/components/base/AntroTable";
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { mapActions, mapState, createNamespacedHelpers } from 'vuex'
+import numberFormat from '@/filters/numberFormat'
+import timeAgoInWords from '@/filters/timeAgoInWords'
+import AntroTable from '@/components/base/AntroTable.vue'
+import { OnlineState, Player } from '@/types/index'
 
-export default {
-  name: "OnlineTable",
+const {
+  mapActions: mapOnlineActions,
+  mapState: mapOnlineState
+} = createNamespacedHelpers('online')
+
+@Component({
   components: {
     AntroTable
   },
@@ -47,17 +54,24 @@ export default {
     timeAgoInWords
   },
   computed: {
-    ...mapState({
-      players: state => state.players.online
+    ...mapOnlineState({
+      players: (state: OnlineState) => state.all
     })
-  },
-  created() {
-    this.online();
   },
   methods: {
-    ...mapActions({
-      online: "players/online"
+    ...mapOnlineActions({
+      getAllOnline: 'getAll'
     })
   }
-};
+})
+export default class OnlineTable extends Vue {
+  name: string = 'OnlineTable'
+
+  players!: Player[]
+  getAllOnline!: () => Promise<any>
+
+  created() {
+    this.getAllOnline()
+  }
+}
 </script>

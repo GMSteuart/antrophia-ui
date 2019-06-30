@@ -8,6 +8,21 @@ export enum AlertType {
   Success = 'success',
   Warning = 'warning'
 }
+
+export enum Factory {
+  Build = 'build_pct',
+  Missile = 'missile_pct',
+  Scanner = 'scanner_pct'
+}
+
+export enum PlayerFinishTimes {
+  Barracks = 'Barracks',
+  Build = 'Build',
+  Explore = 'Explore',
+  Research = 'Research',
+  Spies = 'Spies'
+}
+
 export enum RequestState {
   None,
   Pending,
@@ -27,6 +42,16 @@ export interface AlertState {
 // TODO: finish Alliance interface
 export interface Alliance {
   id: number
+  name: string
+  password?: string
+  info?: string
+}
+
+export interface AllianceForm {
+  name: string
+  password: string
+  passwordConfirm: string
+  info: string
 }
 
 export interface AllianceBankState {
@@ -92,17 +117,17 @@ export interface CrudState<T> {
 
 export interface Explore {
   id: number
+  end: Date
 }
 
 export interface ExploreState {
   estimatedLandGain: number
 }
 
-export interface FactoriesState extends CrudState<Factory> {}
-
-export interface Factory {
-  id: number
+export interface Factories {
+  [factoryName: string]: number
 }
+export interface FactoriesState extends CrudState<Factory> {}
 
 export interface Game {
   id: number
@@ -112,6 +137,11 @@ export interface GamesState {
   current: Game[]
   upcoming: Game[]
   playing: Game[]
+}
+
+export interface JoinGameForm {
+  gameId: number
+  raceId: number
 }
 
 export interface Lab {
@@ -131,6 +161,7 @@ export interface Minerals {
 }
 
 export interface MineralsState extends CrudState<Mineral> {}
+
 export interface Mines {
   id: number
 }
@@ -177,6 +208,7 @@ export interface PlayersState extends CrudState<Player> {}
 // TODO: finish Race interface
 export interface Race {
   id: number
+  name: string
 }
 
 export interface Retal {

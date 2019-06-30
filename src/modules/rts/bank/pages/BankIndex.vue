@@ -10,7 +10,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
   import BankDepositForm from "../components/BankDepositForm"
   import BankWithdrawForm from "../components/BankWithdrawForm";
   import BankTransferForm from "../components/BankTransferForm";

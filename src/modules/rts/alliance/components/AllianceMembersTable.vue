@@ -49,7 +49,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
 // TODO: consolodate with alliances/AllianceView table
 import { mapState } from "vuex";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";

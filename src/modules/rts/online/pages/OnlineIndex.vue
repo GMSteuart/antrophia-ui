@@ -6,14 +6,19 @@
   </div>
 </template>
 
-<script>
-import OnlineTable from "../components/OnlineTable";
-export default {
-  name: "OnlineIndex",
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import OnlineTable from '../components/OnlineTable.vue'
+
+@Component({
   components: {
     OnlineTable
   }
-};
+})
+export default class OnlineIndex extends Vue {
+  name: string = 'OnlineIndex'
+}
 </script>
 
 <style lang="scss" scoped>

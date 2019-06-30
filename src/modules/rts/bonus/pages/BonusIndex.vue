@@ -34,7 +34,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
 // TODO: Make social links little antrophia styled buttons with the icon only in an ordered row
 import { mapActions, mapState } from "vuex";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";

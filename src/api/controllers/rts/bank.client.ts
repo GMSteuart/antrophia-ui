@@ -18,11 +18,11 @@ export default {
       }
     })
   },
-  transfer(amount: number, recipient_id: number) {
+  transfer(amount: number, recipientId: number) {
     return http().post(`/bank/transfer`, {
       Bank: {
         amount,
-        recipient_id
+        recipient_id: recipientId
       }
     })
   }

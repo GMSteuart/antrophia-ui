@@ -12,8 +12,7 @@
           class="antro-intro-wrapper centered"
           :css="false"
           :key="'antro-intro'"
-          >{{ loadingString }}</antrophia-intro
-        >
+        >{{ loadingString }}</antrophia-intro>
       </div>
       <component v-else :is="layout" :key="'layout'">
         <router-view></router-view>
@@ -27,10 +26,7 @@
         :class="alert.type"
         :key="'alert'"
       >
-        <font-awesome-icon
-          :icon="faTimes"
-          class="alert__close"
-        ></font-awesome-icon>
+        <font-awesome-icon :icon="faTimes" class="alert__close"></font-awesome-icon>
         <p>{{ alert.message }}</p>
       </div>
     </transition>
@@ -41,13 +37,13 @@
 // TODO: convert to ts
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { mapActions, mapState } from "vuex"
-import anime from "animejs"
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faTimes, IconDefinition } from "@fortawesome/pro-light-svg-icons"
-import AntrophiaIntro from "@/components/base/AntrophiaIntro.vue"
+import { mapActions, mapState } from 'vuex'
+import anime from 'animejs'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faTimes, IconDefinition } from '@fortawesome/pro-light-svg-icons'
+import AntrophiaIntro from '@/components/base/AntrophiaIntro.vue'
 import { AlertState, RootState } from '@/types'
-import { Route } from 'vue-router';
+import { Route } from 'vue-router'
 
 @Component({
   components: {
@@ -59,16 +55,16 @@ import { Route } from 'vue-router';
     alert: (state: RootState) => state.alert
   }),
   methods: mapActions({
-    alertClear: "alert/clear"
+    alertClear: 'alert/clear'
   })
 })
 export default class App extends Vue {
-  name: string = "App"
+  name: string = 'App'
   // Data
   faTimes: IconDefinition = faTimes
   // authenticated = auth.authenticated, // TODO: move to computed from AuthState
   loading: boolean = false
-  loadingString: string = "loading..."
+  loadingString: string = 'loading...'
 
   // Component Decerator Declarations
   alert!: AlertState
@@ -77,8 +73,8 @@ export default class App extends Vue {
   // Lifecycle Hooks
   created() {
     // todo: only run animation on the first visit
-    this.loading = true;
-    setTimeout(() => (this.loading = false), 1500);
+    this.loading = true
+    setTimeout(() => (this.loading = false), 1500)
   }
 
   // Computed properties
@@ -87,36 +83,36 @@ export default class App extends Vue {
     if (this.$route.matched.some(record => record.meta.layout)) {
       // if we do then set it to the parent layout
       // todo: make this find the matched element and set it instead of parent
-      return this.$route.matched[0].meta.layout + "-layout";
+      return this.$route.matched[0].meta.layout + '-layout'
     }
 
-    return "main-layout";
+    return 'main-layout'
   }
 
   // Methods
   /* Animations */
   onAppear(el: HTMLElement) {
     anime({
-      targets: ".antro-intro .lines path",
+      targets: '.antro-intro .lines path',
       strokeDashoffset: [anime.setDashoffset, 0],
-      easing: "easeInOutSine",
+      easing: 'easeInOutSine',
       duration: 5000,
       delay(el: HTMLElement, i: number) {
         return i * 350
       },
-      direction: "alternate",
+      direction: 'alternate',
       loop: false
-    });
+    })
   }
   appearCancelled(el: HTMLElement) {
     anime({
-      targets: ".antro-intro",
+      targets: '.antro-intro',
       opacity: 0,
       duration: 100
-    });
+    })
   }
   beforeEnter(el: HTMLElement) {
-    if (el.classList.contains("layout")) {
+    if (el.classList.contains('layout')) {
       anime({
         targets: el,
         opacity: 0
@@ -128,9 +124,9 @@ export default class App extends Vue {
       targets: el,
       opacity: 1,
       duration: 2000,
-      easing: "linear",
+      easing: 'linear',
       complete: done
-    });
+    })
   }
   /* Hooks */
   beforeRouteEnter(to: Route, from: Route, next: () => void) {
@@ -143,7 +139,6 @@ export default class App extends Vue {
     next()
   }
 }
-
 </script>
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Orbitron:400,500,700,900');

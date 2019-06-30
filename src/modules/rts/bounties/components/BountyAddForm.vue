@@ -18,7 +18,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
 import { mapActions, mapGetters, mapState } from "vuex";
 import { validationMixin } from "vuelidate";
 import { minValue, required } from "vuelidate/lib/validators";

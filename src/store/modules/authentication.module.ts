@@ -19,7 +19,6 @@ export const actions: ActionTree<AuthState, RootState> = {
       commit('loginSuccess', user)
       router.push('/lobby')
     } catch (err) {
-      console.log(err)
       commit('loginFailure', err)
       dispatch('alert/error', err, { root: true })
     }

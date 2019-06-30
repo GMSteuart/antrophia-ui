@@ -41,7 +41,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
 import { mapActions, mapGetters, mapState } from "vuex";
 import numberFormat from "@/filters/numberFormat";
 import secondsToEta from "@/filters/secondsToEta";

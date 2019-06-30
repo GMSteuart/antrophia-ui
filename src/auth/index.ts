@@ -10,7 +10,6 @@ export default {
   user: {
     authenticated: false
   },
-
   async login(email: string, password: string) {
     try {
       const { data } = await axios.post(`${endpoint}/users/token.json`, {
@@ -26,7 +25,6 @@ export default {
       throw new Error(err)
     }
   },
-
   async register(creds: any) {
     try {
       const { data } = await axios.post(
@@ -37,7 +35,7 @@ export default {
       localStorage.setItem('token', token)
       this.user.authenticated = true
     } catch (err) {
-      console.log('register err: ' + err)
+      throw new Error(err)
     }
   },
 

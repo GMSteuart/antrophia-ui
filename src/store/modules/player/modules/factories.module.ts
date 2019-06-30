@@ -30,5 +30,6 @@ export const actions: ActionTree<FactoriesState, RootState> = {
 export const factories: Module<FactoriesState, RootState> = {
   namespaced: true,
   state,
-  actions
+  actions,
+  modules: {}
 }

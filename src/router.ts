@@ -51,7 +51,7 @@ const router = new Router({
       children: [
         {
           path: 'join/:game_id',
-          name: 'usersgames-add',
+          name: 'joinGame',
           component: () =>
             import(
               /* webpackChunkName: "JoinGame" */ '@/views/games/JoinGame.vue'

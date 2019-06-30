@@ -15,15 +15,19 @@
   </div>
 </template>
 
-<script>
-import FactoriesForm from '../components/FactoriesForm';
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import FactoriesForm from '../components/FactoriesForm.vue';
 
-export default {
-  name: 'FactoriesIndex',
+@Component({
   components: {
     FactoriesForm,
-  },
-};
+  }
+})
+export default class FactoriesIndex extends Vue {
+  name: string = 'FactoriesIndex'
+}
 </script>
 
 <style lang="scss" scoped>

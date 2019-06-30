@@ -33,10 +33,10 @@ export default {
     }
   },
   computed: {
-    inputListeners: function() {
-      var vm = this;
+    inputListeners() {
+      const vm = this;
       return Object.assign({}, this.$listeners, {
-        input: function(event) {
+        input(event) {
           vm.$emit("input", event.target.value);
         }
       });
@@ -56,7 +56,7 @@ export default {
 
 .antro-radio {
   line-height: 28px;
-  font-family: "Poppins";
+  font-family: 'Poppins';
 
   label {
     // color the text according to style guide
@@ -74,13 +74,13 @@ export default {
   }
 }
 
-.antro-radio input[type="radio"] {
+.antro-radio input[type='radio'] {
   opacity: 0;
 }
 
 // Initial radio state
 .antro-radio label::before {
-  content: "";
+  content: '';
   display: inline-block;
   height: 20px;
   width: 20px;
@@ -98,7 +98,7 @@ export default {
 }
 .antro-radio label::before {
   position: absolute;
-  content: "";
+  content: '';
   display: inline-block;
 }
 /* Outer-box */
@@ -110,13 +110,13 @@ export default {
   top: 0px;
 }
 
-.antro-radio input[type="radio"]:checked + label::before {
+.antro-radio input[type='radio']:checked + label::before {
   background-color: $primary-green;
   border-color: $primary-green;
 }
 
 /* Adding focus styles on the outer-box of the fake radio */
-.antro-radio input[type="radio"]:focus + label::before {
+.antro-radio input[type='radio']:focus + label::before {
   outline: $primary-focus auto 5px;
 }
 </style>

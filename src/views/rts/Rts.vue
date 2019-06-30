@@ -2,12 +2,8 @@
   <router-view></router-view>
 </template>
 
-<script>
-  export default {
-    name: "Rts"
-  }
+<script lang="ts">
+export default {
+  name: 'Rts'
+}
 </script>
-
-<style lang="scss" scoped>
-
-</style>

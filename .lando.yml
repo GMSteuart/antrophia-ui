@@ -28,6 +28,8 @@ tooling:
     service: node
   node:
     service: node
+  tslint:
+    service: node
   vue:
     service: node
   yarn:

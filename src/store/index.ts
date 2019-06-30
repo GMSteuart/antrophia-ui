@@ -17,14 +17,10 @@ import { units } from './modules/units'
 // RTS Modules
 import { alliances } from './modules/alliances.module'
 import { bank } from './modules/bank.module'
-import { barracks } from './modules/barracks.module'
 import { base } from './modules/alliance.module'
 import { bounties } from './modules/bounties.module'
-import { build } from './modules/build.module'
-import { explore } from './modules/explore.module'
-import { factories } from './modules/factories.module'
-import { market } from './modules/market.module'
-import { labs } from './modules/labs.module'
+import { market } from './modules/player/modules/explore.module'
+import { labs } from './modules/player/modules/factories.module'
 import { mercenaries } from './modules/mercenaries.module'
 import { messages } from './modules/messages.module'
 import { mines } from './modules/mines.module'
@@ -60,12 +56,8 @@ const store: StoreOptions<RootState> = {
     // RTS Modules
     alliances,
     bank,
-    barracks,
     base,
     bounties,
-    build,
-    explore,
-    factories,
     market,
     labs,
     mercenaries,

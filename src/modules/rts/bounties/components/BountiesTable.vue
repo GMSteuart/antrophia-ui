@@ -30,7 +30,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
 import { mapActions, mapState } from "vuex";
 import AntroTable from "@/components/base/AntroTable";
 import numberFormat from "@/filters/numberFormat";

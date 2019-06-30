@@ -48,7 +48,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
 import { mapActions, mapState } from "vuex";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import AntroButton from "@/components/base/AntroButton";

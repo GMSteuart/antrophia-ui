@@ -7,76 +7,93 @@
           v-for="race in gamesRaces"
           :key="race.Race.id"
           :value="race.Race.id"
-          >{{ race.Race.name }}</option
-        >
+        >{{ race.Race.name }}</option>
       </select>
 
-      <antro-button class="btn--submit antro-btn" @click.native="doJoin"
-        >Join Game</antro-button
-      >
+      <antro-button
+        class="btn--submit antro-btn"
+        @click.native="doJoin"
+      >Join Game</antro-button>
     </antro-fieldset>
     <router-link :to="{ name: 'lobby' }">Back to Lobby</router-link>
   </div>
 </template>
 
-<script>
-import { mapActions, mapState } from "vuex";
-import AntroFieldset from "@/components/base/AntroFieldset";
-import AntroButton from "@/components/base/AntroButton";
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { mapActions, mapState, createNamespacedHelpers } from 'vuex'
+import AntroFieldset from '@/components/base/AntroFieldset.vue'
+import AntroButton from '@/components/base/AntroButton.vue'
+import { JoinGameForm, Race, RacesState } from '@/types'
 
-export default {
-  name: "JoinGame",
+const {
+  mapActions: mapRacesActions,
+  mapState: mapRacesState
+} = createNamespacedHelpers('races')
+const { mapActions: mapGamesActions } = createNamespacedHelpers('games')
+const { mapActions: mapAlertActions } = createNamespacedHelpers('alert')
+@Component({
   components: {
     AntroButton,
     AntroFieldset
   },
-  data() {
-    return {
-      raceId: ""
-    };
-  },
   computed: {
-    ...mapState({
-      races: state => state.races.all
-    }),
-    gamesRaces() {
-      const _races = [];
-      this.races.forEach(race => {
-        if (race.Race.name !== "Zealot" && race.Race.name !== "Undying") {
-          _races.push(race);
-        }
-      });
-
-      return _races;
-    }
-  },
-  created() {
-    if (!this.races.length) {
-      this.fetchRaces();
-    }
+    ...mapRacesState({
+      races: (state: RacesState) => state.all
+    })
   },
   methods: {
-    ...mapActions({
-      fetchRaces: "races/fetch",
-      join: "games/join",
-      warning: "alert/warning"
+    ...mapRacesActions({
+      fetchRaces: 'fetch'
     }),
-    doJoin() {
-      this.join({
-        game_id: this.$route.params.game_id,
-        race_id: this.raceId
-      }).then(response => {
-        console.log(response);
-        // if (response.status) {
-        //   console.log(response)
-        // }
-        // else {
-        //   this.warning(response.error.message)
-        // }
-      });
+    ...mapGamesActions({
+      joinGame: 'join'
+    }),
+    ...mapAlertActions({
+      warning: 'warning'
+    })
+  }
+})
+export default class JoinGame extends Vue {
+  name: string = 'JoinGame'
+  raceId?: number = undefined
+
+  races!: Race[]
+
+  fetchRaces!: () => Race[]
+  joinGame!: (payload: JoinGameForm) => void // todo: return success/error
+  warning!: () => void
+
+  get gamesRaces() {
+    const _races: Race[] = []
+    this.races.forEach(race => {
+      if (race.name !== 'Zealot' && race.name !== 'Undying') {
+        _races.push(race)
+      }
+    })
+
+    return _races
+  }
+  created() {
+    if (!this.races.length) {
+      this.fetchRaces()
     }
   }
-};
+
+  async doJoin() {
+    try {
+      const gameId = Number(this.$route.params.gameId)
+      const raceId = Number(this.raceId)
+      await this.joinGame({
+        gameId,
+        raceId
+      })
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

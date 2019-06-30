@@ -3,9 +3,7 @@
     <h1>Lobby</h1>
 
     <antro-table v-if="isPlaying">
-      <template slot="caption"
-        >Currently Playing</template
-      >
+      <template slot="caption">Currently Playing</template>
 
       <template slot="header">
         <tr>
@@ -22,9 +20,9 @@
           <td class="string">{{ game.Game.title }}</td>
           <td class="string">{{ game.Game.start | TimeAgoInWords }}</td>
           <td class="string">{{ game.Game.end | TimeAgoInWords }}</td>
-          <td class="string">
-            {{ gameLength(game.Game.start, game.Game.end) }} days
-          </td>
+          <td
+            class="string"
+          >{{ gameLength(game.Game.start, game.Game.end) }} days</td>
           <td class="action">
             <div @click="play(game.Game.id)">Play</div>
           </td>
@@ -33,9 +31,7 @@
     </antro-table>
 
     <antro-table>
-      <template slot="caption"
-        >Live Games</template
-      >
+      <template slot="caption">Live Games</template>
 
       <template slot="header">
         <tr>
@@ -52,16 +48,14 @@
           <td class="string">{{ game.Game.title }}</td>
           <td class="string">{{ game.Game.start | TimeAgoInWords }}</td>
           <td class="string">{{ game.Game.end | TimeAgoInWords }}</td>
-          <td class="string">
-            {{ gameLength(game.Game.start, game.Game.end) }} days
-          </td>
+          <td
+            class="string"
+          >{{ gameLength(game.Game.start, game.Game.end) }} days</td>
           <td class="action">
             <div
               v-if="inGameList.includes(game.Game.id)"
               @click="join(game.Game.id)"
-            >
-              Play
-            </div>
+            >Play</div>
             <div v-else>Join</div>
           </td>
         </tr>
@@ -70,64 +64,88 @@
   </div>
 </template>
 
-<script>
-// TODO: convert to ts
-import { mapActions, mapState } from "vuex";
-import TimeAgoInWords from "@/filters/timeAgoInWords";
-import TimeLength from "@/filters/timeLength";
-import AntroTable from "@/components/base/AntroTable";
+<script lang="ts">
+import Vue from 'vue'
+import { mapActions, mapState, createNamespacedHelpers } from 'vuex'
+import TimeAgoInWords from '@/filters/timeAgoInWords'
+import TimeLength from '@/filters/timeLength'
+import AntroTable from '@/components/base/AntroTable.vue'
+import Component from 'vue-class-component'
+import { GamesState, RootState } from '@/types'
+import { Game } from '../types/index'
 
-export default {
-  name: "Lobby",
+const {
+  mapActions: mapGamesActions,
+  mapState: mapGamesState
+} = createNamespacedHelpers('games')
+
+@Component({
   components: {
     AntroTable
+  },
+  computed: {
+    ...mapGamesState({
+      current: (state: GamesState) => state.current,
+      upcoming: (state: GamesState) => state.upcoming,
+      playing: (state: GamesState) => state.playing
+    })
   },
   filters: {
     TimeAgoInWords
   },
-  created() {
-    this.fetchGames();
-  },
-  computed: {
-    ...mapState({
-      current: state => state.games.current,
-      upcoming: state => state.games.upcoming,
-      playing: state => state.games.playing
-    }),
-    isPlaying() {
-      return typeof this.playing !== "undefined";
-    },
-    inGameList() {
-      const _items = [];
-
-      this.current.forEach(game => {
-        _items.push(game.Game.id);
-      });
-
-      return _items;
-    }
-  },
   methods: {
     ...mapActions({
-      fetchGames: "games/fetch",
-      playGame: "games/play"
-    }),
-    gameLength(start, end) {
-      return TimeLength(start, end);
-    },
-    join(gameId) {
-      this.$router.push({
-        name: "usersgames-add",
-        params: {
-          gameId
-        }
-      });
-    },
-    play(gameId) {
-      this.playGame({ gameId });
-    }
+      fetchGames: 'fetch',
+      playGame: 'play'
+    })
   }
-};
+})
+export default class Lobby extends Vue {
+  name = 'Lobby'
+
+  current!: Game[]
+  upcoming!: Game[]
+  playing!: Game[]
+
+  fetchGames!: () => void // todo: returns promise?
+  playGame!: (gameId: number) => void // todo: returns promise?
+
+  created() {
+    this.fetchGames()
+  }
+
+  get isPlaying() {
+    return typeof this.playing !== 'undefined'
+  }
+
+  gameLength(start: Date, end: Date) {
+    return TimeLength(start, end)
+  }
+
+  /**
+   * inGameList
+   * TODO: how to optimize this with current games?
+   * Determine if a plyer is currently in the game
+   * @returns array: ids of games player is in
+   */
+  get inGameList() {
+    const _items: number[] = []
+
+    this.current.forEach(game => {
+      _items.push(game.id)
+    })
+
+    return _items
+  }
+
+  join(gameId: number) {
+    this.$router.push({ path: `/games/join/${gameId}` })
+  }
+
+  play(gameId: number) {
+    this.playGame(gameId)
+  }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -21,7 +21,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
 import { mapActions } from "vuex";
 import draggable from "vuedraggable";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";

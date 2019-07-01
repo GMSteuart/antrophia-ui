@@ -92,10 +92,17 @@ export interface BarracksState {
 export interface BountiesState extends CrudState<Player> {}
 
 export interface Build {
-  id: number
+  id?: number
+  end?: Date
 }
 export interface Building {
   id: number
+  name: string
+  cost: number
+  info: string
+  tooltip: string
+  created?: Date
+  modified?: Date
 }
 export interface Buildings {
   [buildingName: string]: any
@@ -116,8 +123,10 @@ export interface CrudState<T> {
 }
 
 export interface Explore {
-  id: number
-  end: Date
+  id?: number
+  time?: number
+  money?: number
+  end?: Date
 }
 
 export interface ExploreState {
@@ -131,6 +140,7 @@ export interface FactoriesState extends CrudState<Factory> {}
 
 export interface Game {
   id: number
+  speedfactor: number
 }
 
 export interface GamesState {

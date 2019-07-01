@@ -8,7 +8,10 @@
         type="number"
         :class="{ error: $v.money.$error }"
       ></antro-input>
-      <div v-if="!$v.money.minValue" class="error">Deposit amount must be positive</div>
+      <div
+        v-if="!$v.money.minValue"
+        class="error"
+      >Deposit amount must be positive</div>
 
       <antro-button @click.native="doDeposit">Deposit</antro-button>
     </antro-fieldset>
@@ -18,16 +21,16 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { mapActions, mapState } from "vuex";
-import { validationMixin } from "vuelidate";
-import { minValue, required } from "vuelidate/lib/validators";
-import isEmpty from "lodash/isEmpty";
-import AntroFieldset from "@/components/base/AntroFieldset";
-import AntroInput from "@/components/base/AntroInput";
-import AntroButton from "@/components/base/AntroButton";
+import { mapActions, mapState } from 'vuex'
+import { validationMixin } from 'vuelidate'
+import { minValue, required } from 'vuelidate/lib/validators'
+import isEmpty from 'lodash/isEmpty'
+import AntroFieldset from '@/components/base/AntroFieldset'
+import AntroInput from '@/components/base/AntroInput'
+import AntroButton from '@/components/base/AntroButton'
 
 export default {
-  name: "BankDepositForm",
+  name: 'BankDepositForm',
   components: {
     AntroButton,
     AntroInput,
@@ -36,9 +39,9 @@ export default {
   mixins: [validationMixin],
   data() {
     return {
-      money: "",
+      money: '',
       submitStatus: null
-    };
+    }
   },
   computed: {
     ...mapState({
@@ -53,31 +56,31 @@ export default {
         return (
           this.player.UserGame.max_bank_cardisium -
           this.player.UserGame.bank_money
-        );
+        )
       }
-      return 0;
+      return 0
     }
   },
   created() {
-    if (typeof this.bank.info === "undefined") {
-      this.fetchInfo();
+    if (typeof this.bank.info === 'undefined') {
+      this.fetchInfo()
     }
   },
   methods: {
     ...mapActions({
-      fetchInfo: "bank/fetch",
-      deposit: "bank/deposit"
+      fetchInfo: 'bank/fetch',
+      deposit: 'bank/deposit'
     }),
     doDeposit() {
-      const { money } = this;
+      const { money } = this
 
       if (money) {
-        this.$v.touch();
+        this.$v.touch()
         if (this.$v.$invalid) {
-          this.submitStatus = "ERROR";
+          this.submitStatus = RequestState.Error
         } else {
-          this.submitStatus = "PENDING";
-          this.deposit(money).then(() => (this.submitStatus = "OK"));
+          this.submitStatus = 'PENDING'
+          this.deposit(money).then(() => (this.submitStatus = 'OK'))
         }
       }
     }
@@ -88,7 +91,7 @@ export default {
       minValue: minValue(1)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

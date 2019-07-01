@@ -76,26 +76,44 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { mapActions, mapGetters, mapState } from "vuex";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { mapActions, mapGetters, mapState, createNamespacedHelpers } from 'vuex'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   faCaretDown,
   faCaretUp,
   faMinusSquare,
   faPlusSquare
-} from "@fortawesome/pro-light-svg-icons";
-import isEmpty from "lodash/isEmpty";
+} from '@fortawesome/pro-light-svg-icons'
+import isEmpty from 'lodash/isEmpty'
 
-import numberFormat from "@/filters/numberFormat";
-import secondsToEta from "@/filters/secondsToEta";
+import numberFormat from '@/filters/numberFormat'
+import secondsToEta from '@/filters/secondsToEta'
 
-import AntroButton from "@/components/base/AntroButton";
-import AntroInput from "@/components/base/AntroInput";
-import AntroSelect from "@/components/base/AntroSelect";
-import AntroTable from "@/components/base/AntroTable";
+import AntroButton from '@/components/base/AntroButton.vue'
+import AntroInput from '@/components/base/AntroInput.vue'
+import AntroSelect from '@/components/base/AntroSelect.vue'
+import AntroTable from '@/components/base/AntroTable.vue'
+import {
+  Build,
+  Building,
+  BuildingsState,
+  BuildState,
+  Player,
+  PlayerState
+} from '../../../../types/index'
 
-export default {
-  name: "BuildTable",
+const {
+  mapActions: mapBuildActions,
+  mapState: mapBuildState
+} = createNamespacedHelpers('player/build')
+const {
+  mapActions: mapBuildingsActions,
+  mapGetters: mapBuildingsGetters,
+  mapState: mapBuildingsState
+} = createNamespacedHelpers('buildings')
+const { mapState: mapPlayerState } = createNamespacedHelpers('player')
+
+@Component({
   components: {
     AntroButton,
     AntroInput,
@@ -107,153 +125,180 @@ export default {
     numberFormat,
     secondsToEta
   },
-  data() {
-    return {
-      interval: false,
-      faCaretDown,
-      faCaretUp,
-      faMinusSquare,
-      faPlusSquare,
-      totalCost: 0,
-      totalAmount: 0,
-      tablesTotals: [],
-      tablesAmounts: [],
-      loading: false,
-      form: {},
-      multiplier: 0
-    };
-  },
   computed: {
-    ...mapGetters({
-      buildingsByType: "buildings/orderByType"
+    ...mapBuildingsGetters({
+      buildingsByType: 'orderByType'
     }),
-    ...mapState({
-      buildings: state => state.buildings.all,
-      player: state => state.player,
-      totalTime: state => state.build.time
+    ...mapBuildingsState({
+      buildings: (state: BuildingsState) => state.all
     }),
-    Build() {
-      const _build = {
-        buildings: {},
-        multiplier: this.multiplier + 1
-      };
-
-      Object.keys(this.form).forEach(buildingId => {
-        _build.buildings[buildingId] = {
-          cost: this.buildings[buildingId].Building.cost,
-          amount: this.form[buildingId]
-        };
-      });
-
-      return _build;
-    }
+    ...mapBuildState({
+      totalTime: (state: BuildState) => state.build.time
+    }),
+    ...mapPlayerState({
+      player: (state: PlayerState) => state
+    })
   },
+  methods: {
+    ...mapBuildActions({
+      calc: 'calc',
+      start: 'start'
+    }),
+    ...mapBuildingsActions({
+      fetchBuildings: 'fetchBuildings'
+    })
+  }
+})
+export default class BuilldTable extends Vue {
+  name: string = 'BuildTable'
+
+  interval: boolean = false
+  // TODO: implement fa type
+  faCaretDown: any = faCaretDown
+  faCaretUp: any = faCaretUp
+  faMinusSquare: any = faMinusSquare
+  faPlusSquare: any = faPlusSquare
+  totalCost: number = 0
+  totalAmount: number = 0
+  tablesTotals: number[] = []
+  tablesAmounts: number[] = []
+  loading: boolean = false
+  form: { [buildingId: number]: number } = {}
+  multiplier: number = 0
+
+  // TODO: buildingsByType is not correct
+  buildingsByType!: { [buildingType: string]: Building[] }
+  buildings!: Building[]
+  totalTime!: number
+  player!: Player
+
+  // TODO: update parameters passed
+  calc!: (form: any) => number
+  start!: (form: any) => Promise<any>
+  fetchBuildings!: () => Promise<any>
+
+  get Build() {
+    const _build = {
+      buildings: {},
+      multiplier: this.multiplier + 1
+    }
+
+    Object.keys(this.form).forEach((buildingId: number) => {
+      _build.buildings[buildingId] = {
+        cost: this.buildings[buildingId].Building.cost,
+        amount: this.form[buildingId]
+      }
+    })
+
+    return _build
+  }
   created() {
     // Fetch buildings data if it is not loaded
     if (isEmpty(this.buildingsByType)) {
-      this.fetchBuildings();
+      this.fetchBuildings()
     }
     // initialize table totals
     Object.keys(this.buildingsByType).forEach((buildingType, bTidx) => {
-      this.$set(this.tablesTotals, bTidx, 0);
-      this.$set(this.tablesAmounts, bTidx, 0);
-    });
-  },
-  methods: {
-    ...mapActions({
-      calc: "build/calc",
-      fetchBuildings: "buildings/fetchBuildings",
-      start: "build/start"
-    }),
-    doBuild() {
-      // todo: add validation
-      this.start(this.Build);
-    },
-    clear() {
-      this.form.forEach((amount, idx) => {
-        this.$set(this.form, idx, 0);
-      });
-    },
-    decrement(buildingId) {
-      let amount = 0;
+      this.$set(this.tablesTotals, bTidx, 0)
+      this.$set(this.tablesAmounts, bTidx, 0)
+    })
+  }
 
-      if (typeof this.form[buildingId] === "undefined") {
-        amount = 0;
-      } else if (this.form[buildingId] === "string") {
-        amount = Number(this.form[buildingId]);
-      } else {
-        amount = this.form[buildingId] - 1;
-      }
+  doBuild() {
+    // todo: add validation
+    this.start(this.Build)
+  }
 
-      if (amount < 0) {
-        amount = 0;
-      }
+  clear() {
+    this.form.forEach((amount, idx) => {
+      this.$set(this.form, idx, 0)
+    })
+  }
 
-      this.$set(this.form, buildingId, amount);
-      this.updateTotal();
-    },
-    increment(buildingId) {
-      let amount = 1;
+  decrement(buildingId) {
+    let amount = 0
 
-      if (typeof this.form[buildingId] === "undefined") {
-        amount = 1;
-      } else if (typeof this.form[buildingId] === "string") {
-        amount = Number(this.form[buildingId]);
-      } else {
-        amount = this.form[buildingId] + 1;
-      }
-      // todo: check amount against free land
-      this.$set(this.form, buildingId, amount);
-      this.updateTotal();
-    },
-    startDecerement(buildingId) {
-      if (!this.interval) {
-        this.interval = setInterval(() => this.decrement(buildingId), 30);
-      }
-    },
-    startIncrement(buildingId) {
-      if (!this.interval) {
-        this.interval = setInterval(() => this.increment(buildingId), 30);
-      }
-    },
-    stop() {
-      clearInterval(this.interval);
-      this.interval = false;
-    },
-    updateTotal() {
-      this.totalCost = 0;
-      this.totalAmount = 0;
+    if (typeof this.form[buildingId] === 'undefined') {
+      amount = 0
+    } else if (this.form[buildingId] === 'string') {
+      amount = Number(this.form[buildingId])
+    } else {
+      amount = this.form[buildingId] - 1
+    }
 
-      // iterate over the building types
-      Object.keys(this.buildingsByType).forEach((buildingType, bTidx) => {
-        let btCost = 0;
-        let btAmount = 0;
+    if (amount < 0) {
+      amount = 0
+    }
 
-        // iterate over every building in that type
-        Object.keys(this.buildingsByType[buildingType]).forEach(idx => {
-          const buildingId = this.buildingsByType[buildingType][idx].Building.id;
+    this.$set(this.form, buildingId, amount)
+    this.updateTotal()
+  }
 
-          if (typeof this.form[buildingId] !== "undefined") {
-            // update the cost and amount for that building type
-            btCost +=
-              Number(this.form[buildingId]) *
-              this.buildings[buildingId].Building.cost *
-              (this.multiplier + 1);
-            btAmount += Number(this.form[buildingId]);
-          }
-        });
+  increment(buildingId) {
+    let amount = 1
 
-        this.$set(this.tablesTotals, bTidx, btCost);
-        this.$set(this.tablesAmounts, bTidx, btAmount);
+    if (typeof this.form[buildingId] === 'undefined') {
+      amount = 1
+    } else if (typeof this.form[buildingId] === 'string') {
+      amount = Number(this.form[buildingId])
+    } else {
+      amount = this.form[buildingId] + 1
+    }
+    // todo: check amount against free land
+    this.$set(this.form, buildingId, amount)
+    this.updateTotal()
+  }
 
-        this.totalCost += btCost;
-        this.totalAmount += btAmount;
-      });
-
-      this.calc(this.Build);
+  startDecerement(buildingId) {
+    if (!this.interval) {
+      this.interval = setInterval(() => this.decrement(buildingId), 30)
     }
   }
-};
+
+  startIncrement(buildingId) {
+    if (!this.interval) {
+      this.interval = setInterval(() => this.increment(buildingId), 30)
+    }
+  }
+
+  stop() {
+    clearInterval(this.interval)
+    this.interval = false
+  }
+
+  updateTotal() {
+    this.totalCost = 0
+    this.totalAmount = 0
+
+    // iterate over the building types
+    Object.keys(this.buildingsByType).forEach((buildingType, bTidx) => {
+      let btCost = 0
+      let btAmount = 0
+
+      // iterate over every building in that type
+      Object.keys(this.buildingsByType[buildingType]).forEach(idx: number => {
+        const buildingId = this.buildingsByType[buildingType][idx].id
+
+        if (typeof this.form[buildingId] !== 'undefined') {
+          // update the cost and amount for that building type
+          btCost +=
+            Number(this.form[buildingId]) *
+            this.buildings[buildingId].cost *
+            (this.multiplier + 1)
+          btAmount += Number(this.form[buildingId])
+        }
+      })
+
+      this.$set(this.tablesTotals, bTidx, btCost)
+      this.$set(this.tablesAmounts, bTidx, btAmount)
+
+      this.totalCost += btCost
+      this.totalAmount += btAmount
+    })
+
+    this.calc(this.Build)
+  }
+}
 </script>
 
 <style lang="scss" scoped>

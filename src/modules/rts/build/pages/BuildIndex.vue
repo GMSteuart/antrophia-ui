@@ -28,46 +28,65 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { mapActions, mapState } from "vuex";
-import moment from "moment";
-import isEmpty from "lodash/isEmpty";
+import { mapActions, mapState, createNamespacedHelpers } from 'vuex'
+import moment from 'moment'
+import isEmpty from 'lodash/isEmpty'
 
-import AntroButton from "@/components/base/AntroButton";
-import AntroCountdown from "@/components/base/AntroCountdown";
-import BuildTable from "../components/BuildTable";
+import AntroButton from '@/components/base/AntroButton.vue'
+import AntroCountdown from '@/components/base/AntroCountdown.vue'
+import BuildTable from '../components/BuildTable.vue'
+import { Build } from '@/types'
 
-export default {
-  name: "BuildIndex",
+const {
+  mapActions: mapBuildActions,
+  mapState: mapBuildState
+} = createNamespacedHelpers('pplayer/build')
+
+@Component({
   components: {
     AntroButton,
     AntroCountdown,
     BuildTable
   },
   computed: {
-    ...mapState({
-      build: state => state.player.Build
-    }),
-    hasBuild() {
-      return !isEmpty(this.build) && this.build.end !== null;
-    },
-    isFinished() {
-      return this.hasBuild && moment.utc(this.build.end) < moment.utc();
-    }
-  },
-  created() {
-    if (this.isFinished) {
-      this.finish();
-    }
+    ...mapBuildState({
+      build: state => state
+    })
   },
   methods: {
-    ...mapActions({
-      cancel: "build/cancel",
-      finish: "build/finish"
-    }),
-    doCancel() {
-      // TODO: implement modal confirming cancel
-      this.cancel();
+    ...mapBuildActions({
+      cancel: 'cancel',
+      finish: 'finish'
+    })
+  }
+})
+export default class BuildIndex extends Vue {
+  name: string = 'BuildIndex'
+
+  build!: Build
+
+  // TODO: need to update params passed here
+  cancel!: () => Promise<any>
+  finish!: () => Promise<any>
+
+  get hasBuild() {
+    return !isEmpty(this.build) && this.build.end !== null
+  }
+
+  get isFinished() {
+    // TODO: get rid of moment
+    return this.hasBuild && moment.utc(this.build.end) < moment.utc()
+  }
+
+  created() {
+    if (this.isFinished) {
+      this.finish()
     }
   }
-};
+
+  doCancel() {
+    // TODO: implement modal confirming cancel
+    this.cancel()
+  }
+}
 </script>

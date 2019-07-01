@@ -8,7 +8,10 @@
         type="number"
         :class="{ error: $v.amount.$error }"
       ></antro-input>
-      <div v-if="!$v.amount.minValue" class="error">Deposit amount must be positive</div>
+      <div
+        v-if="!$v.amount.minValue"
+        class="error"
+      >Deposit amount must be positive</div>
 
       <antro-button @click.native="doDeposit">Deposit</antro-button>
     </antro-fieldset>
@@ -18,15 +21,15 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { mapActions, mapState } from "vuex";
-import { validationMixin } from "vuelidate";
-import { minValue, required } from "vuelidate/lib/validators";
-import AntroFieldset from "@/components/base/AntroFieldset";
-import AntroInput from "@/components/base/AntroInput";
-import AntroButton from "@/components/base/AntroButton";
+import { mapActions, mapState } from 'vuex'
+import { validationMixin } from 'vuelidate'
+import { minValue, required } from 'vuelidate/lib/validators'
+import AntroFieldset from '@/components/base/AntroFieldset'
+import AntroInput from '@/components/base/AntroInput'
+import AntroButton from '@/components/base/AntroButton'
 
 export default {
-  name: "AllianceBankDepositForm",
+  name: 'AllianceBankDepositForm',
   components: {
     AntroButton,
     AntroInput,
@@ -35,9 +38,9 @@ export default {
   mixins: [validationMixin],
   data() {
     return {
-      amount: "",
+      amount: '',
       submitStatus: null
-    };
+    }
   },
   computed: {
     ...mapState({
@@ -45,22 +48,22 @@ export default {
     }),
     maxDeposit() {
       // TODO: determine max deposit
-      return 0;
+      return 0
     },
     methods: {
       ...mapActions({
-        deposit: "base/bank/desposit"
+        deposit: 'base/bank/desposit'
       }),
       doDeposit() {
-        const { amount } = this;
+        const { amount } = this
 
         if (amount) {
-          this.$v.touch();
+          this.$v.touch()
           if (this.$v.$invalid) {
-            this.submitStatus = "ERROR";
+            this.submitStatus = RequestState.Error
           } else {
-            this.submitStatus = "PENDING";
-            this.deposit(amount).then(() => (this.submitStatus = "OK"));
+            this.submitStatus = 'PENDING'
+            this.deposit(amount).then(() => (this.submitStatus = 'OK'))
           }
         }
       }
@@ -72,5 +75,5 @@ export default {
       }
     }
   }
-};
+}
 </script>

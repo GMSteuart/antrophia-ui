@@ -21,7 +21,6 @@ services:
       yarn: latest
     build:
       - yarn install
-    command: yarn serve
 
 tooling:
   npm:

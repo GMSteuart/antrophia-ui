@@ -9,7 +9,10 @@
         type="number"
         :class="{ error: $v.amount.$error }"
       ></antro-input>
-      <div v-if="!$v.amount.minValue" class="error">Deposit amount must be positive</div>
+      <div
+        v-if="!$v.amount.minValue"
+        class="error"
+      >Deposit amount must be positive</div>
 
       <antro-button @click.native="doDeposit">Withdraw</antro-button>
     </antro-fieldset>
@@ -36,16 +39,16 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { mapActions, mapState } from "vuex";
-import { validationMixin } from "vuelidate";
-import { minValue, required } from "vuelidate/lib/validators";
-import AntroFieldset from "@/components/base/AntroFieldset";
-import AntroInput from "@/components/base/AntroInput";
-import AntroButton from "@/components/base/AntroButton";
-import AntroSelect from "@/components/base/AntroSelect";
+import { mapActions, mapState } from 'vuex'
+import { validationMixin } from 'vuelidate'
+import { minValue, required } from 'vuelidate/lib/validators'
+import AntroFieldset from '@/components/base/AntroFieldset'
+import AntroInput from '@/components/base/AntroInput'
+import AntroButton from '@/components/base/AntroButton'
+import AntroSelect from '@/components/base/AntroSelect'
 
 export default {
-  name: "AllianceBankWithdrawForm",
+  name: 'AllianceBankWithdrawForm',
   components: {
     AntroButton,
     AntroInput,
@@ -55,10 +58,10 @@ export default {
   mixins: [validationMixin],
   data() {
     return {
-      amount: "",
-      to_id: "",
+      amount: '',
+      to_id: '',
       submitStatus: null
-    };
+    }
   },
   computed: {
     ...mapState({
@@ -67,20 +70,20 @@ export default {
   },
   methods: {
     ...mapActions({
-      withdraw: "base/bank/withdraw"
+      withdraw: 'base/bank/withdraw'
     }),
     doDeposit() {
-      const { amount, to_id } = this;
+      const { amount, to_id } = this
 
       if (amount) {
-        this.$v.touch();
+        this.$v.touch()
         if (this.$v.$invalid) {
-          this.submitStatus = "ERROR";
+          this.submitStatus = RequestState.Error
         } else {
-          this.submitStatus = "PENDING";
+          this.submitStatus = 'PENDING'
           this.deposit({ Withdraw: { amount, to_id } }).then(
-            () => (this.submitStatus = "OK")
-          );
+            () => (this.submitStatus = 'OK')
+          )
         }
       }
     }
@@ -91,5 +94,5 @@ export default {
       minValue: minValue(1)
     }
   }
-};
+}
 </script>

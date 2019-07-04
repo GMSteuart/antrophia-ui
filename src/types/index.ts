@@ -101,6 +101,7 @@ export interface Building {
   cost: number
   info: string
   tooltip: string
+  buildingTypeId?: number
   created?: Date
   modified?: Date
 }

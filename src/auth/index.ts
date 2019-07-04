@@ -58,7 +58,7 @@ export default {
     return {
       // todo: for CakePHP 3.x
       // 'Authorization': 'Bearer ' + localStorage.getItem('id_token')
-      AuthToken: localStorage.getItem('token')
+      Authorization: localStorage.getItem('token')
     }
   }
 }
